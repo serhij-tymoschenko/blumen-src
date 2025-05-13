@@ -1,4 +1,4 @@
-import {RGB_REGEX, STYLE_PARAM_REGEX} from "./Constants";
+import {RGB_REGEX, STYLE_PARAM_REGEX} from "../Constants";
 import {rgbToHex} from "./Color";
 
 export const addCss = (content) => {

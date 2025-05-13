@@ -9,3 +9,4 @@ export const STYLE_PARAM_REGEX = /style="([^"']+)"/g;
 export const INK_LABEL_REGEX = /\s*inkscape:label="[^"]*"/g
 export const INK_GROUP_REGEX = /\s*inkscape:groupmode="[^"]*"/g
 export const RGB_REGEX = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/g;
+export const EMPTY_LINE_REGEX = /^\s*[\r\n]/gm;

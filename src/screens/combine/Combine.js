@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {Alert, Box, Snackbar, Typography} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
-import normalize from "../../utils/Normalizer";
+import convert from "../../utils/normalizer/Converter";
+import {combine} from "../../utils/combiner/Combiner";
 
 const Combine = () => {
     const [svgSrc, setSvgSrc] = useState(null);
@@ -45,7 +46,7 @@ const Combine = () => {
             const textReader = new FileReader();
 
             textReader.onloadend = () => {
-                setSvg(normalize(textReader.result));
+                setSvg(convert(textReader.result));
             };
             textReader.readAsText(file);
         }
@@ -67,14 +68,20 @@ const Combine = () => {
                     setPngSrc(reader.result);
                 };
                 img.src = reader.result;
-                console.log(svg);
             };
             reader.readAsDataURL(file);
         }
     };
 
     const onDownload = () => {
-        alert('Download triggered');
+        let output = pngSrc ? combine(svg, pngSrc) : svg;
+        const blob = new Blob([output], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'output.svg';
+        a.click();
     };
 
     return (
@@ -106,6 +113,9 @@ const Combine = () => {
                     <Output
                         svgSize={svgSize}
                         pngSize={pngSize}
+                        svgSrc={svgSrc}
+                        pngSrc={pngSrc}
+                        onDownload={onDownload}
                     />
                 </Box>
 
