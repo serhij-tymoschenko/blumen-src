@@ -7,7 +7,7 @@ import {Box} from "@mui/material";
 import Preview from "./screens/preview/Preview";
 
 function App() {
-    const [activeButton, setActiveButton] = useState(ButtonType.COMBINE);
+    const [activeButton, setActiveButton] = useState(ButtonType.PREVIEW);
     const onButtonClick = (buttonType) => {
         setActiveButton(buttonType);
     };
