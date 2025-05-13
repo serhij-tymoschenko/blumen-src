@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import {Box, Typography, Snackbar, Alert} from '@mui/material';
+import {Alert, Box, Snackbar, Typography} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
+import normalize from "../../utils/Normalizer";
 
 const Combine = () => {
     const [svgSrc, setSvgSrc] = useState(null);
     const [pngSrc, setPngSrc] = useState(null);
     const [svgSize, setSvgSize] = useState(0);
     const [pngSize, setPngSize] = useState(0);
+    const [svg, setSvg] = useState(null);
 
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -39,6 +41,13 @@ const Combine = () => {
                 img.src = reader.result;
             };
             reader.readAsDataURL(file);
+
+            const textReader = new FileReader();
+
+            textReader.onloadend = () => {
+                setSvg(normalize(textReader.result));
+            };
+            textReader.readAsText(file);
         }
     };
 
@@ -58,6 +67,7 @@ const Combine = () => {
                     setPngSrc(reader.result);
                 };
                 img.src = reader.result;
+                console.log(svg);
             };
             reader.readAsDataURL(file);
         }
@@ -157,7 +167,7 @@ const Combine = () => {
                 autoHideDuration={3000}
                 onClose={handleCloseSnackbar}
             >
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
