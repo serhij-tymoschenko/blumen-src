@@ -2,6 +2,8 @@ import './App.css';
 import PageHeader from "./screens/components/PageHeader";
 import {useState} from "react";
 import ButtonType from "./data/models/ButtonType";
+import Combine from "./screens/combine/Combine";
+import {Box} from "@mui/material";
 
 function App() {
     const [activeButton, setActiveButton] = useState(ButtonType.COMBINE);
@@ -9,11 +11,19 @@ function App() {
         setActiveButton(buttonType);
     };
 
+    const screen = (activeButton === ButtonType.COMBINE)
+        ? <Combine/>
+        : <div></div>
+
+
     return (
-        <PageHeader title="RCA utils"
-                    activeButton={activeButton}
-                    onButtonClick={onButtonClick}
-        />
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+            <PageHeader title="RCA utils"
+                        activeButton={activeButton}
+                        onButtonClick={onButtonClick}
+            />
+            {screen}
+        </Box>
     );
 }
 
