@@ -4,6 +4,7 @@ import Actions from "./components/Actions";
 import Output from "./components/Output";
 import convert from "../../utils/converter/Converter";
 import {combine} from "../../utils/combiner/Combiner";
+import {TraitPreview} from "../components/TraitPreview";
 
 const Combine = () => {
     const [svgSrc, setSvgSrc] = useState(null);
@@ -119,58 +120,8 @@ const Combine = () => {
                     />
                 </Box>
 
-                {/* Right Column: Combined Preview */}
-                <Box
-                    sx={{
-                        width: 190,
-                        height: 300,
-                        border: '2px dashed #ccc',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#f9f9f9',
-                    }}
-                >
-                    {!svgSrc && !pngSrc ? (
-                        <Typography variant="body2" color="textSecondary">
-                            Combined Preview
-                        </Typography>
-                    ) : (
-                        <>
-                            {svgSrc && (
-                                <img
-                                    src={svgSrc}
-                                    alt="SVG Background"
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'contain',
-                                    }}
-                                />
-                            )}
-                            {pngSrc && (
-                                <img
-                                    src={pngSrc}
-                                    alt="PNG Overlay"
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'contain',
-                                        pointerEvents: 'none',
-                                    }}
-                                />
-                            )}
-                        </>
-                    )}
-                </Box>
+                {/* Right Column: Combined TraitPreview */}
+                <TraitPreview bottom={svgSrc} top={pngSrc}/>
             </Box>
             <Snackbar
                 open={openSnackbar}

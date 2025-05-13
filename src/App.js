@@ -4,6 +4,7 @@ import {useState} from "react";
 import ButtonType from "./data/models/ButtonType";
 import Combine from "./screens/combine/Combine";
 import {Box} from "@mui/material";
+import Preview from "./screens/preview/Preview";
 
 function App() {
     const [activeButton, setActiveButton] = useState(ButtonType.COMBINE);
@@ -13,7 +14,7 @@ function App() {
 
     const screen = (activeButton === ButtonType.COMBINE)
         ? <Combine/>
-        : <div></div>
+        : <Preview/>
 
 
     return (
