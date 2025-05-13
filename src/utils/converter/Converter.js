@@ -46,6 +46,10 @@ const addClasses = (content) => {
     return content;
 }
 
+const normalizeStyle = (content) => {
+    return content.replace("<style type=\"text/css\">", "<style>");
+}
+
 const correctCss = (content) => {
     return content.replace('#0000ff', 'blue')
 }
@@ -65,6 +69,7 @@ const convert = (content) => {
     localContent = normalizeG(localContent);
     localContent = addClasses(localContent);
     localContent = correctCss(localContent);
+    localContent = normalizeStyle(localContent);
     localContent = removeEmptyLines(localContent);
 
     return localContent;

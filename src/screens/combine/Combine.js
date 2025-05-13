@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, Box, Snackbar, Typography} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
-import convert from "../../utils/normalizer/Converter";
+import convert from "../../utils/converter/Converter";
 import {combine} from "../../utils/combiner/Combiner";
 
 const Combine = () => {
