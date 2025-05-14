@@ -1,13 +1,12 @@
 import ColorPicker from "../../components/ColorPicker";
-import {Box} from "@mui/material";
 import VStack from "../../../stacks/VStack";
 
-const ColorSection = () => {
+const ColorSection = ({bodyColor, setBodyColor, hairColor, setHairColor, eyesColor, setEyesColor}) => {
     return (
         <VStack>
-            <ColorPicker/>
-            <ColorPicker/>
-            <ColorPicker/>
+            <ColorPicker color={bodyColor} setColor={setBodyColor} title={"Body:"}/>
+            <ColorPicker color={hairColor} setColor={setHairColor} title={"Hair:"}/>
+            <ColorPicker color={eyesColor} setColor={setEyesColor} title={"Eyes:"}/>
         </VStack>
     )
 }

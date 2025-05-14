@@ -1,8 +1,8 @@
 import React from "react";
 import {TraitPreview} from "../../components/TraitPreview";
-import {toSvgFile} from "../../../utils/helpers/SvgHelper";
+import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 
-const Showcase = ({items}) => {
+const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     let localItems = [
         items[9],
         items[6],
@@ -21,7 +21,7 @@ const Showcase = ({items}) => {
         traitWidth: item.traitWidth * 2,
         traitHeight: item.traitHeight * 2
     }));
-
+    localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor)
     localItems = toSvgFile(localItems)
 
     return (

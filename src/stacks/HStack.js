@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const HStack = ({ children }) => {
+const HStack = ({ gap = 4, children }) => {
     return (
         <Box
             sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                gap: 4,
+                gap: gap,
                 alignItems: 'center',
                 justifyContent: 'center',
             }}

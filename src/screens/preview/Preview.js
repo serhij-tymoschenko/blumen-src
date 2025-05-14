@@ -1,5 +1,5 @@
 import PreviewGrid from "./components/PreviewGrid";
-import {Box, Paper, Typography} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 
 
 import React, {useCallback, useState} from "react";
@@ -12,6 +12,10 @@ import VStack from "../../stacks/VStack";
 import HStack from "../../stacks/HStack";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
+    const [bodyColors, setBodyColors] = useState('#00FF00')
+    const [hairColors, setHairColors] = useState('#0000FF')
+    const [eyesColors, setEyesColors] = useState('#FFFF00')
+
     const [items, setItems] = useState([]);
 
     const getImageData = (file) => {
@@ -101,15 +105,12 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     )}
                 </Paper>
 
-                {/* Main content row: inputs + preview */}
                 <HStack>
-                    {/* Left column (file inputs or controls) */}
-                    <Showcase items={items}/>
-
-                    {/* Right column (grid of image previews) */}
-                    <PreviewGrid items={items} setItems={setItems}/>
-
-                    <ColorSection/>
+                    <Showcase items={items} eyesColor={eyesColors} bodyColor={bodyColors} hairColor={hairColors}/>
+                    <PreviewGrid items={items} setItems={setItems} bodyColor={bodyColors} hairColor={hairColors}
+                                 eyesColor={eyesColors}/>
+                    <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
+                                  setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
                 </HStack>
             </VStack>
         </Centered>

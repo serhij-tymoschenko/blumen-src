@@ -1,10 +1,10 @@
 import {TraitPreview} from "../../components/TraitPreview";
 import snoo from "../../../res/raw/snoo.svg"
-import {toSvgFile} from "../../../utils/helpers/SvgHelper";
+import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import VStack from "../../../stacks/VStack";
 import MatchParent from "../../../stacks/MatchParent";
 
-const ImageGrid = ({items, setItems}) => {
+const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
     const snooItem = {
         src: snoo,
         traitWidth: 95,
@@ -24,7 +24,8 @@ const ImageGrid = ({items, setItems}) => {
         "Background"
     ]
 
-    let localItems = toSvgFile(items)
+    let localItems = replaceColors(items, bodyColor, hairColor, eyesColor)
+    localItems = toSvgFile(localItems)
 
     const handleDragStart = (index) => (event) => {
         event.dataTransfer.setData('text/plain', index);
