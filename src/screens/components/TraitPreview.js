@@ -41,7 +41,7 @@ export const TraitPreview = ({
                             transform: 'translate(-50%, -50%)',
                             width: traitWidth,
                             height: traitHeight,
-                            objectFit: 'contain',
+                            objectFit: 'none',
                             borderRadius,
                         }}
                     />
@@ -57,7 +57,7 @@ export const TraitPreview = ({
                             transform: 'translate(-50%, -50%)',
                             width: traitWidth,
                             height: traitHeight,
-                            objectFit: 'contain',
+                            objectFit: 'none',
                             pointerEvents: 'none',
                             borderRadius,
                         }}
