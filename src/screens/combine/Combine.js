@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import {Alert, Box, Snackbar, Typography} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
-import convert from "../../utils/converter/Converter";
+import correct from "../../utils/corrector/Corrector";
 import {combine} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
 
 const Combine = () => {
     const [svgSrc, setSvgSrc] = useState(null);
+    const [svgName, setSvgName] = useState(null);
     const [pngSrc, setPngSrc] = useState(null);
     const [svgSize, setSvgSize] = useState(0);
     const [pngSize, setPngSize] = useState(0);
@@ -38,6 +39,7 @@ const Combine = () => {
                         return;
                     }
                     setSvgSize(file.size);
+                    setSvgName(file.name);
                     setSvgSrc(reader.result);
                 };
                 img.src = reader.result;
@@ -47,7 +49,7 @@ const Combine = () => {
             const textReader = new FileReader();
 
             textReader.onloadend = () => {
-                setSvg(convert(textReader.result));
+                setSvg(correct(textReader.result));
             };
             textReader.readAsText(file);
         }
@@ -81,7 +83,7 @@ const Combine = () => {
 
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'output.svg';
+        a.download = pngSrc ? `combined-${svgName}` : `corrected-${svgName}`;
         a.click();
     };
 

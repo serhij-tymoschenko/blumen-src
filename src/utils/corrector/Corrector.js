@@ -58,7 +58,7 @@ const removeEmptyLines = (content) => {
     return content.replace(EMPTY_LINE_REGEX, "");
 }
 
-const convert = (content) => {
+const correct = (content) => {
     let localContent = content;
 
     localContent = removeComments(localContent);
@@ -75,4 +75,4 @@ const convert = (content) => {
     return localContent;
 }
 
-export default convert;
+export default correct;

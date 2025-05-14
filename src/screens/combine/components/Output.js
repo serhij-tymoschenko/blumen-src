@@ -13,7 +13,7 @@ const output = ({svgSize, pngSize, svgSrc, pngSrc, onDownload}) => {
     const output = svgSrc ? <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Button variant="contained" onClick={onDownload}>
             {svgSrc && pngSrc && 'Combine'}
-            {svgSrc && !pngSrc && 'Convert'}
+            {svgSrc && !pngSrc && 'Correct'}
         </Button>
         <Typography
             variant="body2"
