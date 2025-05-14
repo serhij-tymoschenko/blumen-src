@@ -1,6 +1,20 @@
 import {TraitPreview} from "../../components/TraitPreview";
+import snoo from "../../../res/raw/snoo.svg"
 
 const ImageGrid = ({items, setItems}) => {
+    const names = [
+        "Face",
+        "Eyes",
+        "Top",
+        "Bottom",
+        "Hat",
+        "Front hair",
+        "Back hair",
+        "Left",
+        "Right",
+        "Background"
+    ]
+
     const handleDragStart = (index) => (event) => {
         event.dataTransfer.setData('text/plain', index);
 
@@ -39,6 +53,14 @@ const ImageGrid = ({items, setItems}) => {
         event.preventDefault(); // Necessary to allow drop
     };
 
+    const getTop = (item, index) => {
+        return (index != 9 && index != 5) ? item.top : snoo
+    }
+
+    const getBottom = (item, index) => {
+        return (index != 9 && index != 5) ? snoo : item.top
+    }
+
     return (
         <div
             style={{
@@ -58,38 +80,51 @@ const ImageGrid = ({items, setItems}) => {
                             color: '#333',
                         }}
                     >
-                        Trait {index + 1}
+                        { names[index] }
                     </div>
 
-                    {/* Draggable box only */}
-                    <div
-                        key={index}
-                        draggable
-                        onDragStart={handleDragStart(index)}
-                        onDrop={handleDrop(index)}
-                        onDragOver={handleDragOver}
-                        style={{
-                            position: 'relative',
-                            width: 138 + 4,
-                            height: 184 + 4,
-                            cursor: 'grab',
-                            borderRadius: 5,
-                            boxSizing: 'border-box',
-                            overflow: 'hidden',
-                            backgroundColor: '#f9f9f9',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-                        }}
-                    >
-                        <TraitPreview
-                            width={138}
-                            height={184}
-                            traitHeight={150}
-                            traitWidth={95}
-                            borderRadius={5}
-                            bottom={item.bottom}
-                            top={item.top}
-                        />
-                    </div>
+                    {
+                        index !== 9 ?
+                            <div
+                                key={index}
+                                draggable
+                                onDragStart={handleDragStart(index)}
+                                onDrop={handleDrop(index)}
+                                onDragOver={handleDragOver}
+                                style={{
+                                    position: 'relative',
+                                    width: 138 + 4,
+                                    height: 184 + 4,
+                                    cursor: 'grab',
+                                    borderRadius: 5,
+                                    boxSizing: 'border-box',
+                                    overflow: 'hidden',
+                                    backgroundColor: '#f9f9f9',
+                                    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                                }}
+                            >
+                                <TraitPreview
+                                    width={138}
+                                    height={184}
+                                    traitHeight={150}
+                                    traitWidth={95}
+                                    borderRadius={5}
+                                    bottom={getBottom(item, index)}
+                                    top={getTop(item, index)}
+                                />
+                            </div>
+                            :
+                            <TraitPreview
+                                width={138}
+                                height={184}
+                                traitWidth={138}
+                                traitHeight={184}
+                                borderRadius={5}
+                                bottom={getBottom(item, index)}
+                                top={getTop(item, index)}
+                            />
+                    }
+
                 </div>
             ))}
         </div>
