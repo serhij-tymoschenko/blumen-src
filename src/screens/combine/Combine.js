@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Box, Snackbar, Typography} from '@mui/material';
+import {Alert, Box, Snackbar} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
 import correct from "../../utils/corrector/Corrector";
@@ -7,9 +7,9 @@ import {combine} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
 
 const Combine = () => {
-    const [svgSrc, setSvgSrc] = useState(null);
+    const [svgSrc, setSvgSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
     const [svgName, setSvgName] = useState(null);
-    const [pngSrc, setPngSrc] = useState(null);
+    const [pngSrc, setPngSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
     const [svgSize, setSvgSize] = useState(0);
     const [pngSize, setPngSize] = useState(0);
     const [svg, setSvg] = useState(null);
@@ -40,7 +40,11 @@ const Combine = () => {
                     }
                     setSvgSize(file.size);
                     setSvgName(file.name);
-                    setSvgSrc(reader.result);
+                    setSvgSrc({
+                        src: reader.result,
+                        traitWidth: 190,
+                        traitHeight: 300
+                    });
                 };
                 img.src = reader.result;
             };
@@ -68,7 +72,8 @@ const Combine = () => {
                         return;
                     }
                     setPngSize(file.size);
-                    setPngSrc(reader.result);
+                    setPngSrc({src: reader.result, traitWidth: 380, traitHeight: 600});
+
                 };
                 img.src = reader.result;
             };
@@ -78,7 +83,7 @@ const Combine = () => {
 
     const onDownload = () => {
         let output = pngSrc ? combine(svg, pngSrc) : svg;
-        const blob = new Blob([output], { type: 'text/plain' });
+        const blob = new Blob([output], {type: 'text/plain'});
         const url = URL.createObjectURL(blob);
 
         const a = document.createElement('a');
@@ -123,7 +128,7 @@ const Combine = () => {
                 </Box>
 
                 {/* Right Column: Combined TraitPreview */}
-                <TraitPreview bottom={svgSrc} top={pngSrc}/>
+                <TraitPreview layers={[svgSrc, pngSrc] || ""}/>
             </Box>
             <Snackbar
                 open={openSnackbar}

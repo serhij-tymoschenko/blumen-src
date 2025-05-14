@@ -1,7 +1,14 @@
 import {TraitPreview} from "../../components/TraitPreview";
 import snoo from "../../../res/raw/snoo.svg"
+import {toSvgFile} from "../../../utils/helpers/SvgHelper";
 
 const ImageGrid = ({items, setItems}) => {
+    const snooItem = {
+        src: snoo,
+        traitWidth: 95,
+        traitHeight: 150,
+    }
+
     const names = [
         "Face",
         "Eyes",
@@ -14,6 +21,8 @@ const ImageGrid = ({items, setItems}) => {
         "Right",
         "Background"
     ]
+
+    let localItems = toSvgFile(items)
 
     const handleDragStart = (index) => (event) => {
         event.dataTransfer.setData('text/plain', index);
@@ -36,7 +45,7 @@ const ImageGrid = ({items, setItems}) => {
         // Optional cleanup after drag ends
         event.target.addEventListener('dragend', () => {
             document.body.removeChild(dragImage);
-        }, { once: true });
+        }, {once: true});
     };
 
 
@@ -54,11 +63,11 @@ const ImageGrid = ({items, setItems}) => {
     };
 
     const getTop = (item, index) => {
-        return (index !== 9 && index !== 6) ? item.top : snoo
+        return (index !== 9 && index !== 6) ? item : snooItem
     }
 
     const getBottom = (item, index) => {
-        return (index !== 9 && index !== 6) ? snoo : item.top
+        return (index !== 9 && index !== 6) ? snooItem : item
     }
 
     return (
@@ -70,8 +79,8 @@ const ImageGrid = ({items, setItems}) => {
                 justifyItems: 'center',
             }}
         >
-            {items.map((item, index) => (
-                <div style={{ width: 138, textAlign: 'center' }}>
+            {localItems.map((item, index) => (
+                <div style={{width: 138, textAlign: 'center'}}>
                     {/* Label above, NOT draggable */}
                     <div
                         style={{
@@ -80,7 +89,7 @@ const ImageGrid = ({items, setItems}) => {
                             color: '#333',
                         }}
                     >
-                        { names[index] }
+                        {names[index]}
                     </div>
 
                     {
@@ -109,8 +118,7 @@ const ImageGrid = ({items, setItems}) => {
                                     traitHeight={150}
                                     traitWidth={95}
                                     borderRadius={5}
-                                    bottom={getBottom(item, index)}
-                                    top={getTop(item, index)}
+                                    layers={[getBottom(item, index), getTop(item, index)]}
                                 />
                             </div>
                             :
@@ -120,8 +128,7 @@ const ImageGrid = ({items, setItems}) => {
                                 traitWidth={138}
                                 traitHeight={184}
                                 borderRadius={5}
-                                bottom={getBottom(item, index)}
-                                top={getTop(item, index)}
+                                layers={[getBottom(item, index), getTop(item, index)]}
                             />
                     }
 
