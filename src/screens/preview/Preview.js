@@ -10,6 +10,8 @@ import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
 import VStack from "../../stacks/VStack";
 import HStack from "../../stacks/HStack";
+import HexShowcase from "./components/HexShowcase";
+import {replaceColors} from "../../utils/helpers/SvgHelper";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -17,6 +19,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
     const [items, setItems] = useState([]);
+    con
 
     const getImageData = (file) => {
         return new Promise((resolve) => {
@@ -109,8 +112,12 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     <Showcase items={items} eyesColor={eyesColors} bodyColor={bodyColors} hairColor={hairColors}/>
                     <PreviewGrid items={items} setItems={setItems} bodyColor={bodyColors} hairColor={hairColors}
                                  eyesColor={eyesColors}/>
-                    <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
-                                  setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
+                    <VStack>
+                        <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
+                                      setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
+                        <HexShowcase bodyColor={bodyColors} hairColor={hairColors} eyesColor={eyesColors}
+                                     items={replaceColors(items, bodyColors, hairColors, eyesColors)}/>
+                    </VStack>
                 </HStack>
             </VStack>
         </Centered>

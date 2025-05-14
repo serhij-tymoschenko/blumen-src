@@ -1,16 +1,21 @@
 export const combine = (svg, src) => {
-    const index = svg.lastIndexOf("</svg>") - 1
+    const insertIndex = svg.lastIndexOf('</svg>');
 
-    const chs = src.src.includes('data:image/png;base64')
-        ? `
-    <image href="${src.src}" width="380px" height="600px" x="0" y="0" />
-        `
-        : src.src;
+    let injected = '';
 
-    const combinedSvg =
-        svg.slice(0, index)
-        + chs
-        + svg.slice(index);
+    if (src?.src?.includes('data:image/png;base64')) {
+        injected = `<image href="${src.src}" width="380px" height="600px" x="0" y="0" />\n`;
+    } else if (src?.src?.includes('<svg')) {
+        // Remove wrapping <svg>...</svg> tags and extract inner content
+        const match = src.src.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
+        if (match) {
+            injected = match[1]; // Inner contents only
+        } else {
+            injected = src.src; // fallback
+        }
+    } else {
+        injected = src.src; // Raw <g> or similar
+    }
 
-    return combinedSvg;
-}
+    return svg.slice(0, insertIndex) + injected + svg.slice(insertIndex);
+};

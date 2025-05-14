@@ -14,7 +14,7 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
         items[4],
         items[7],
         items[8],
-    ].filter(Boolean); // removes undefined/null if any index is missing
+    ].filter(Boolean);
 
     localItems = localItems.map(item => ({
         src: item.src,
