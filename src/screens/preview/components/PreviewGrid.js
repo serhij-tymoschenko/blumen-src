@@ -1,20 +1,30 @@
 import {TraitPreview} from "../../components/TraitPreview";
-import {useState} from "react";
 
-const ImageGrid = () => {
-    const [items, setItems] = useState([
-        {top: '/images/trait1.png', bottom: ''},
-        {top: '', bottom: ''},
-        {top: '', bottom: ''},
-        {top: '', bottom: ''},
-        {top: '', bottom: ''},
-        {top: '', bottom: ''},
-        {top: '', bottom: ''}
-    ]);
-
+const ImageGrid = ({items, setItems}) => {
     const handleDragStart = (index) => (event) => {
         event.dataTransfer.setData('text/plain', index);
+
+        // Get the original draggable element
+        const draggedElement = event.currentTarget;
+
+        // Clone the element to use as drag image
+        const dragImage = draggedElement.cloneNode(true);
+        dragImage.style.position = 'absolute';
+        dragImage.style.top = '-9999px'; // Move it off-screen
+        dragImage.style.left = '-9999px';
+        dragImage.style.pointerEvents = 'none';
+
+        document.body.appendChild(dragImage);
+
+        // Set it as the drag image
+        event.dataTransfer.setDragImage(dragImage, dragImage.clientWidth / 2, dragImage.clientHeight / 2);
+
+        // Optional cleanup after drag ends
+        event.target.addEventListener('dragend', () => {
+            document.body.removeChild(dragImage);
+        }, { once: true });
     };
+
 
     const handleDrop = (index) => (event) => {
         const draggedIndex = parseInt(event.dataTransfer.getData('text/plain'), 10);

@@ -13,7 +13,7 @@ const Preview = () => {
     const onDrop = useCallback((acceptedFiles) => {
         const newItems = acceptedFiles.map((file) => ({
             top: URL.createObjectURL(file),
-            bottom: '', // You can allow custom selection logic
+            bottom: '',
         }));
 
         setItems((prev) => [...prev, ...newItems]);
@@ -79,7 +79,7 @@ const Preview = () => {
 
 
                 {/* Right column (grid of image previews) */}
-                <PreviewGrid />
+                <PreviewGrid items={items} setItems={setItems}/>
             </Box>
 
             {/* Snackbar feedback */}
