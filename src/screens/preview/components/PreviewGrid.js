@@ -83,8 +83,8 @@ const ImageGrid = ({items, setItems}) => {
                         <TraitPreview
                             width={138}
                             height={184}
-                            traitHeight={95}
-                            traitWidth={150}
+                            traitHeight={150}
+                            traitWidth={95}
                             borderRadius={5}
                             bottom={item.bottom}
                             top={item.top}
