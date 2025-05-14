@@ -1,6 +1,8 @@
 import {TraitPreview} from "../../components/TraitPreview";
 import snoo from "../../../res/raw/snoo.svg"
 import {toSvgFile} from "../../../utils/helpers/SvgHelper";
+import VStack from "../../../stacks/VStack";
+import MatchParent from "../../../stacks/MatchParent";
 
 const ImageGrid = ({items, setItems}) => {
     const snooItem = {
@@ -76,21 +78,16 @@ const ImageGrid = ({items, setItems}) => {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(5, 1fr)', // 5 items per row
                 gap: '16px',
+                alignItems: 'stretch',
                 justifyItems: 'center',
             }}
         >
             {localItems.map((item, index) => (
-                <div style={{width: 138, textAlign: 'center'}}>
-                    {/* Label above, NOT draggable */}
-                    <div
-                        style={{
-                            marginBottom: 6,
-                            fontSize: 14,
-                            color: '#333',
-                        }}
-                    >
+                <VStack gap={0}>
+
+                    <MatchParent height={'auto'}>
                         {names[index]}
-                    </div>
+                    </MatchParent>
 
                     {
                         index !== 9 ?
@@ -131,8 +128,7 @@ const ImageGrid = ({items, setItems}) => {
                                 layers={[getBottom(item, index), getTop(item, index)]}
                             />
                     }
-
-                </div>
+                </VStack>
             ))}
         </div>
     );

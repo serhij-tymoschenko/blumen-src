@@ -1,13 +1,14 @@
 import ColorPicker from "../../components/ColorPicker";
 import {Box} from "@mui/material";
+import VStack from "../../../stacks/VStack";
 
 const ColorSection = () => {
     return (
-        <Box display="flex" flexDirection="column" gap={2}>
+        <VStack>
             <ColorPicker/>
             <ColorPicker/>
             <ColorPicker/>
-        </Box>
+        </VStack>
     )
 }
 

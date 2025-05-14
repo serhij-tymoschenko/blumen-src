@@ -1,5 +1,7 @@
-import {Box, Button, Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import React from "react";
+import VStack from "../../../stacks/VStack";
+import MatchParent from "../../../stacks/MatchParent";
 
 const output = ({svgSize, pngSize, svgSrc, pngSrc, onDownload}) => {
     const formatBytes = (bytes) => {
@@ -10,25 +12,28 @@ const output = ({svgSize, pngSize, svgSrc, pngSrc, onDownload}) => {
     };
 
     const size = svgSize + pngSize + pngSize * 1 / 3;
-    const output = svgSrc ? <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Button variant="contained" onClick={onDownload}>
-            {svgSrc && pngSrc && 'Combine'}
-            {svgSrc && !pngSrc && 'Correct'}
-        </Button>
-        <Typography
-            variant="body2"
-            fontWeight="bold"
-            color={
-                size > 512 * 1024
-                    ? 'error'
-                    : 'textPrimary'
-            }
-        >
-            Size: {formatBytes(size)}
-        </Typography>
-    </Box> : null
 
-    return output;
+    return svgSrc.src ? <VStack>
+        <MatchParent>
+            <VStack>
+                <Button variant="contained" onClick={onDownload} fullWidth>
+                    {svgSrc.src && pngSrc.src && 'Combine'}
+                    {svgSrc.src && !pngSrc.src && 'Correct'}
+                </Button>
+                <Typography
+                    variant="body2"
+                    fontWeight="bold"
+                    color={
+                        size > 512 * 1024
+                            ? 'error'
+                            : 'textPrimary'
+                    }
+                >
+                    Size: {formatBytes(size)}
+                </Typography>
+            </VStack>
+        </MatchParent>
+    </VStack> : null;
 }
 
 export default output;

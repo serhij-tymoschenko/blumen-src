@@ -1,25 +1,20 @@
 import React, {useState} from 'react';
-import {Alert, Box, Snackbar} from '@mui/material';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
 import correct from "../../utils/corrector/Corrector";
 import {combine} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
+import Centered from "../../stacks/Centered";
+import HStack from "../../stacks/HStack";
+import VStack from "../../stacks/VStack";
 
-const Combine = () => {
+const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [svgSrc, setSvgSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
     const [svgName, setSvgName] = useState(null);
     const [pngSrc, setPngSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
     const [svgSize, setSvgSize] = useState(0);
     const [pngSize, setPngSize] = useState(0);
     const [svg, setSvg] = useState(null);
-
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-
-    const handleCloseSnackbar = () => {
-        setOpenSnackbar(false);
-    };
 
     const REQUIRED_RATIO = 380 / 600;
     const hasExactRatio = (width, height) => {
@@ -93,26 +88,9 @@ const Combine = () => {
     };
 
     return (
-        <Box
-            sx={{
-                flexGrow: 1,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: 0,
-                minWidth: 0,
-            }}
-        >
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 4,
-                    alignItems: 'center',
-                }}
-            >
-                {/* Left Column: File Inputs */}
-                <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+        <Centered>
+            <HStack>
+                <VStack>
                     <Actions
                         onSvgChange={onSvgChange}
                         onPngChange={onPngChange}
@@ -125,21 +103,10 @@ const Combine = () => {
                         pngSrc={pngSrc}
                         onDownload={onDownload}
                     />
-                </Box>
-
-                {/* Right Column: Combined TraitPreview */}
+                </VStack>
                 <TraitPreview layers={[svgSrc, pngSrc] || ""}/>
-            </Box>
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={3000}
-                onClose={handleCloseSnackbar}
-            >
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
-        </Box>
+            </HStack>
+        </Centered>
     );
 };
 
