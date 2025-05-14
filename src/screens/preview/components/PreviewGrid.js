@@ -54,11 +54,11 @@ const ImageGrid = ({items, setItems}) => {
     };
 
     const getTop = (item, index) => {
-        return (index != 9 && index != 5) ? item.top : snoo
+        return (index !== 9 && index !== 6) ? item.top : snoo
     }
 
     const getBottom = (item, index) => {
-        return (index != 9 && index != 5) ? snoo : item.top
+        return (index !== 9 && index !== 6) ? snoo : item.top
     }
 
     return (
