@@ -1,18 +1,13 @@
 import {useEffect} from "react";
 
-export const toSvgFile = (items) => items.map((item) => {
-    if (typeof item.src === 'string' && item.src.startsWith('<svg')) {
-        const blob = new Blob([item.src], {type: 'image/svg+xml'});
-        const url = URL.createObjectURL(blob);
-
-        return {
-            ...item,
-            src: url,
-        };
+export const toSvgFile = (item)=> {
+    if (typeof item === 'string' && item.startsWith('<svg')) {
+        const blob = new Blob([item], {type: 'image/svg+xml'});
+        return URL.createObjectURL(blob);
     } else {
         return item;
     }
-});
+}
 
 export const toSvgBlop = (item) => {
     return new Blob([item.src], {type: 'image/svg+xml'})
@@ -20,8 +15,8 @@ export const toSvgBlop = (item) => {
 
 export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
     items.map((item) => {
-        if (typeof item.src === 'string') {
-            let modifiedSrc = item.src;
+        if (typeof item === 'string') {
+            let modifiedSrc = item;
 
             // Replace body colors (green/lime)
             if (bodyColor) {
@@ -42,10 +37,7 @@ export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
                 modifiedSrc = modifiedSrc.replace(/blue/g, hairColor);
             }
 
-            return {
-                ...item,
-                src: modifiedSrc
-            };
+            return modifiedSrc;
         }
         return item;
     });

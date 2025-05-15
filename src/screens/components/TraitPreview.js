@@ -4,7 +4,7 @@ export const TraitPreview = ({
                                  width = 190,
                                  height = 300,
                                  borderRadius = 0,
-                                 layers = [],
+                                 item,
                              }) => {
     return (
         <Box
@@ -21,26 +21,19 @@ export const TraitPreview = ({
                 borderRadius,
             }}
         >
-            {layers
-                .map(
-                    (layer, index) => (
-                        <img
-                            key={index}
-                            src={layer.src}
-                            style={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                width: layer.traitWidth,
-                                height: layer.traitHeight,
-                                objectFit: 'scale-down',
-                                pointerEvents: 'none',
-                            }}
-                        />
-                    )
-                )
-            }
+            <img
+                width={width}
+                height={height}
+                src={item}
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    objectFit: 'scale-down',
+                    pointerEvents: 'none',
+                }}
+            />
         </Box>
     );
 };

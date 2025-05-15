@@ -2,7 +2,7 @@ import PreviewGrid from "./components/PreviewGrid";
 import {Paper, Typography} from "@mui/material";
 
 
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
@@ -10,8 +10,6 @@ import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
 import VStack from "../../stacks/VStack";
 import HStack from "../../stacks/HStack";
-import GetTraitsSvg from "../../utils/combiner/GetTraitsSvg";
-import {replaceColors} from "../../utils/helpers/SvgHelper";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -20,52 +18,30 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     const [items, setItems] = useState([]);
 
-    const getImageData = (file) => {
-        return new Promise((resolve) => {
-            const img = new Image();
-            const objectUrl = URL.createObjectURL(file);
+    const getImageData = async (file) => {
+        const objectUrl = URL.createObjectURL(file);
 
-            img.onload = async () => {
-                let imgWidth, imgHeight;
+        // Convert object URL to Blob (you must define this function correctly)
+        const blob = await objectUrlToBlob(objectUrl);
+        const isSvg = blob.type === 'image/svg+xml';
 
-                if (img.width === 552) {
-                    imgWidth = 138;
-                    imgHeight = 184;
-                } else {
-                    imgWidth = 95;
-                    imgHeight = 150;
-                }
+        // Read the blob content
+        const localSrc = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
 
-
-                const readBlob = (blob, isSvg) => {
-                    return new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result);
-                        reader.onerror = reject;
-                        if (isSvg) {
-                            reader.readAsText(blob);
-                        } else {
-                            reader.readAsDataURL(blob);
-                        }
-                    });
-                };
-
-// Usage
-
-                const blob = await objectUrlToBlob(objectUrl);
-                const isSvg = blob.type === 'image/svg+xml'; // Check if the image is SVG
-                const localSrc = await readBlob(blob, isSvg);
-
-                resolve({
-                    src: localSrc,
-                    traitWidth: imgWidth,
-                    traitHeight: imgHeight,
-                });
-            };
-
-            img.src = objectUrl;
+            if (isSvg) {
+                reader.readAsText(blob); // for inline SVG content
+            } else {
+                reader.readAsDataURL(blob); // for image preview
+            }
         });
+
+        console.log(localSrc)
+        return localSrc; // either raw SVG text or data:image/... base64
     };
+
 
     const onDrop = useCallback(async (acceptedFiles) => {
         // Wait for all images to be processed

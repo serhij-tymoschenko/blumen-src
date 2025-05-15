@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import GetTraitsSvg from "../../../utils/combiner/GetTraitsSvg";
 import VStack from "../../../stacks/VStack";
 import Hex from "./Hex";
+import {combine} from "../../../utils/combiner/Combiner1";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
-    const [traitsSvg, setTraitsSvg] = useState('<svg></svg>');
-
     let localItems = [
         items[9],
         items[6],
@@ -20,16 +18,12 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
         items[7],
         items[8],
     ].filter(Boolean)
-        .map(item => ({
-            src: item.src,
-            traitWidth: item.traitWidth * 2,
-            traitHeight: item.traitHeight * 2
-        }));
 
     localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor);
+    const localTraitsSvg = combine(localItems.slice(1), 552, 736);
 
-    let showcaseItems = [localItems[0], {src: traitsSvg, traitWidth: 207, traitHeight: 276}].filter(Boolean);
-    showcaseItems = toSvgFile(showcaseItems);
+    let showcaseItem = combine(localItems, 552, 736, 0)
+    showcaseItem = toSvgFile(showcaseItem);
 
     return (
         <div style={{
@@ -41,14 +35,13 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
             alignItems: "center",
             position: "relative",
         }}>
-            <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
             <VStack>
-                <Hex traitSvg={traitsSvg}/>
+                <Hex traitSvg={localTraitsSvg}/>
                 <TraitPreview
                     width={207}
                     height={276}
                     borderRadius={5}
-                    layers={showcaseItems}
+                    item={showcaseItem}
                 />
             </VStack>
         </div>
