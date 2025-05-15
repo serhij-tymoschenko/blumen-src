@@ -1,9 +1,9 @@
-import React, {useRef, useState} from "react";
-import { TraitPreview } from "../../components/TraitPreview";
-import { replaceColors, toSvgFile } from "../../../utils/helpers/SvgHelper";
+import React, {useState} from "react";
+import {TraitPreview} from "../../components/TraitPreview";
+import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import HexShowcase from "./HexShowcase";
 
-const Showcase = ({ items, bodyColor, hairColor, eyesColor }) => {
+const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     const [traitsSvg, setTraitsSvg] = useState('<svg></svg>');
 
     let localItems = [
@@ -26,7 +26,7 @@ const Showcase = ({ items, bodyColor, hairColor, eyesColor }) => {
 
     localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor);
 
-    let showcaseItems = [localItems[0], { src: traitsSvg, traitWidth: 272, traitHeight: 368}].filter(Boolean);
+    let showcaseItems = [localItems[0], {src: traitsSvg, traitWidth: 272, traitHeight: 368}].filter(Boolean);
     showcaseItems = toSvgFile(showcaseItems);
 
     const handleDownload = async () => {
@@ -45,7 +45,7 @@ const Showcase = ({ items, bodyColor, hairColor, eyesColor }) => {
             textAlign: 'center',
             position: 'relative'
         }}>
-            <div style={{ marginBottom: 6, fontSize: 14, color: '#333' }}>
+            <div style={{marginBottom: 6, fontSize: 14, color: '#333'}}>
                 Showcase
             </div>
             <TraitPreview
@@ -55,18 +55,6 @@ const Showcase = ({ items, bodyColor, hairColor, eyesColor }) => {
                 layers={showcaseItems}
             />
             <HexShowcase items={localItems} setTraitsSvg={setTraitsSvg}/>
-            <button
-                onClick={handleDownload}
-                style={{
-                    marginTop: '10px',
-                    position: 'relative',
-                    zIndex: 10,
-                    padding: '8px 16px',
-                    cursor: 'pointer'
-                }}
-            >
-                Download as PNG
-            </button>
         </div>
     );
 };
