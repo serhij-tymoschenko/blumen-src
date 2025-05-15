@@ -50,6 +50,8 @@ const Hex = ({traitSvg}) => {
                     </svg>
                 `;
 
+                console.log(pngSrc)
+
                 const base64 = window.btoa(unescape(encodeURIComponent(clippedImageSvg)));
                 setBase64Svg(`data:image/svg+xml;base64,${base64}`);
                 setError(null);
@@ -113,11 +115,11 @@ const Hex = ({traitSvg}) => {
                         src={base64Svg}
                         style={{
                             position: "absolute",
-                            top: "43%", // Moved up 7% (from 50% to 43%)
+                            top: "45%", // Moved up 7% (from 50% to 43%)
                             left: "50%",
                             transform: "translate(-50%, -50%)",
-                            width: "120px",
-                            height: "120px",
+                            width: "114px",
+                            height: "114px",
                             objectFit: "contain",
                             pointerEvents: "none",
                         }}
