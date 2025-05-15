@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { toSvgFile } from "../../../utils/helpers/SvgHelper";
+import { toSvgFile } from "../helpers/SvgHelper";
 
 const NAMESPACE_PREFIX = "item";
 

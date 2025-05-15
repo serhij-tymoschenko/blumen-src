@@ -10,7 +10,7 @@ import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
 import VStack from "../../stacks/VStack";
 import HStack from "../../stacks/HStack";
-import GetTraitsSvg from "./components/GetTraitsSvg";
+import GetTraitsSvg from "../../utils/combiner/GetTraitsSvg";
 import {replaceColors} from "../../utils/helpers/SvgHelper";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {

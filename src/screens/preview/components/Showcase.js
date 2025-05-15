@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import GetTraitsSvg from "./GetTraitsSvg";
+import GetTraitsSvg from "../../../utils/combiner/GetTraitsSvg";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     const [traitsSvg, setTraitsSvg] = useState('<svg></svg>');
