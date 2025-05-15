@@ -2,7 +2,7 @@ import PreviewGrid from "./components/PreviewGrid";
 import {Paper, Typography} from "@mui/material";
 
 
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
@@ -19,7 +19,6 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
     const [items, setItems] = useState([]);
-    con
 
     const getImageData = (file) => {
         return new Promise((resolve) => {
@@ -115,8 +114,6 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     <VStack>
                         <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
                                       setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
-                        <HexShowcase bodyColor={bodyColors} hairColor={hairColors} eyesColor={eyesColors}
-                                     items={replaceColors(items, bodyColors, hairColors, eyesColors)}/>
                     </VStack>
                 </HStack>
             </VStack>

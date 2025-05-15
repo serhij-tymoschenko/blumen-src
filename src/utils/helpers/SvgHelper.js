@@ -43,3 +43,35 @@ export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
         }
         return item;
     });
+
+export const replaceColor = (item,  bodyColor, hairColor, eyesColor) => {
+    if (typeof item === 'string') {
+        let modifiedSrc = item;
+
+        if (hairColor) {
+            modifiedSrc = modifiedSrc.replaceAll(/blue/g, hairColor);
+        }
+
+        if (eyesColor) {
+            modifiedSrc = modifiedSrc
+                .replaceAll(/#[Ff][Ff][Ff][Ff]00/g, eyesColor)
+                .replaceAll(/#ff0/g, eyesColor);
+        }
+
+        // Replace body colors (green/lime)
+        if (bodyColor) {
+            modifiedSrc = modifiedSrc
+                .replaceAll(/#00[Ff][Ff]00/g, bodyColor)
+                .replaceAll(/lime/g, bodyColor);
+        }
+
+        // Replace eye colors (yellow)
+
+
+        // Replace hair color (blue)
+
+
+        return modifiedSrc
+    }
+    return item;
+}
