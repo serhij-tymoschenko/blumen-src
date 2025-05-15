@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import GetTraitsSvg from "../../../utils/combiner/GetTraitsSvg";
+import VStack from "../../../stacks/VStack";
+import Hex from "./Hex";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     const [traitsSvg, setTraitsSvg] = useState('<svg></svg>');
@@ -26,25 +28,30 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
 
     localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor);
 
-    let showcaseItems = [localItems[0], {src: traitsSvg, traitWidth: 272, traitHeight: 368}].filter(Boolean);
+    let showcaseItems = [localItems[0], {src: traitsSvg, traitWidth: 207, traitHeight: 276}].filter(Boolean);
     showcaseItems = toSvgFile(showcaseItems);
 
     return (
         <div style={{
-            width: 272,
+            width: 207,
             textAlign: 'center',
             position: 'relative'
         }}>
-            <div style={{marginBottom: 6, fontSize: 14, color: '#333'}}>
-                Showcase
-            </div>
-            <TraitPreview
-                width={272}
-                height={368}
-                borderRadius={5}
-                layers={showcaseItems}
-            />
-            <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
+            <VStack>
+                <Hex traitSvg={traitsSvg}/>
+                <div>
+                    <div style={{marginBottom: 6, fontSize: 14, color: '#333'}}>
+                        Showcase
+                    </div>
+                    <TraitPreview
+                        width={207}
+                        height={276}
+                        borderRadius={5}
+                        layers={showcaseItems}
+                    />
+                    <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
+                </div>
+            </VStack>
         </div>
     );
 };
