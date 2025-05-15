@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import HexShowcase from "./HexShowcase";
+import GetTraitsSvg from "./GetTraitsSvg";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     const [traitsSvg, setTraitsSvg] = useState('<svg></svg>');
@@ -54,7 +54,7 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
                 borderRadius={5}
                 layers={showcaseItems}
             />
-            <HexShowcase items={localItems} setTraitsSvg={setTraitsSvg}/>
+            <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
         </div>
     );
 };

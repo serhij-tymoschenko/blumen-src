@@ -81,7 +81,7 @@ const parseSvg = async (svgString, itemIndex, combinedDefs, defsCounter) => {
     return { content: innerContent, defsCounter };
 };
 
-const HexShowcase = ({ items, setTraitsSvg }) => {
+const GetTraitsSvg = ({ items, setTraitsSvg }) => {
     const svgContainerRef = useRef(null);
 
     useEffect(() => {
@@ -131,4 +131,4 @@ const HexShowcase = ({ items, setTraitsSvg }) => {
     return <div ref={svgContainerRef} style={{ display: "none" }} />;
 };
 
-export default HexShowcase;
+export default GetTraitsSvg;
