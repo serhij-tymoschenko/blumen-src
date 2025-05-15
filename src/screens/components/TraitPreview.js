@@ -1,4 +1,4 @@
-import {Box, Typography} from '@mui/material';
+import {Box} from '@mui/material';
 
 export const TraitPreview = ({
                                  width = 190,
@@ -21,28 +21,26 @@ export const TraitPreview = ({
                 borderRadius,
             }}
         >
-            {layers.length === 0 ? (
-                <Typography variant="body2" color="textSecondary">
-                    Combined Preview
-                </Typography>
-            ) : (
-                layers.map((layer, index) => (
-                    <img
-                        key={index}
-                        src={layer.src}
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: layer.traitWidth,
-                            height: layer.traitHeight,
-                            objectFit: 'scale-down',
-                            pointerEvents: 'none',
-                        }}
-                    />
-                ))
-            )}
+            {layers
+                .map(
+                    (layer, index) => (
+                        <img
+                            key={index}
+                            src={layer.src}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: layer.traitWidth,
+                                height: layer.traitHeight,
+                                objectFit: 'scale-down',
+                                pointerEvents: 'none',
+                            }}
+                        />
+                    )
+                )
+            }
         </Box>
     );
 };

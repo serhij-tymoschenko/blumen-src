@@ -5,21 +5,16 @@ import hex from "../../../res/raw/hex.svg";
 
 const Hex = ({traitSvg}) => {
     const [base64Svg, setBase64Svg] = useState(null);
-    const [error, setError] = useState(null);
     const [pngBlob, setPngBlob] = useState(null);
 
     useEffect(() => {
         if (!traitSvg) return;
 
         const processImage = async () => {
-            try {
-                const svgBlob = toSvgBlop({src: traitSvg});
-                if (!svgBlob) throw new Error("Failed to create SVG blob");
-            } catch (err) {
-                console.error("Image processing error:", err);
-                setError(err.message);
-                setBase64Svg(null);
-            }
+
+            const svgBlob = toSvgBlop({src: traitSvg});
+            if (!svgBlob) throw new Error("Failed to create SVG blob");
+
         };
 
         processImage();
@@ -29,15 +24,14 @@ const Hex = ({traitSvg}) => {
         if (!pngBlob) return;
 
         const convertToFinalSvg = async () => {
-            try {
-                const pngSrc = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result);
-                    reader.readAsDataURL(pngBlob);
-                });
+            const pngSrc = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(pngBlob);
+            });
 
-                // Increased height by 7% (from 120 to ~128.4)
-                const clippedImageSvg = `
+            // Increased height by 7% (from 120 to ~128.4)
+            const clippedImageSvg = `
                     <svg width="100%" height="107%" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <clipPath id="clip-shape">
@@ -50,16 +44,10 @@ const Hex = ({traitSvg}) => {
                     </svg>
                 `;
 
-                console.log(pngSrc)
+            console.log(pngSrc)
 
-                const base64 = window.btoa(unescape(encodeURIComponent(clippedImageSvg)));
-                setBase64Svg(`data:image/svg+xml;base64,${base64}`);
-                setError(null);
-            } catch (err) {
-                console.error("Conversion error:", err);
-                setError(err.message);
-                setBase64Svg(null);
-            }
+            const base64 = window.btoa(unescape(encodeURIComponent(clippedImageSvg)));
+            setBase64Svg(`data:image/svg+xml;base64,${base64}`);
         };
 
         convertToFinalSvg();
@@ -77,7 +65,7 @@ const Hex = ({traitSvg}) => {
             <div style={{
                 position: "relative",
                 width: 120,
-                height: 160,
+                height: 124.5,
                 margin: "0 auto",
             }}>
                 <img
@@ -115,7 +103,7 @@ const Hex = ({traitSvg}) => {
                         src={base64Svg}
                         style={{
                             position: "absolute",
-                            top: "45%", // Moved up 7% (from 50% to 43%)
+                            top: "44%", // 43 on site
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                             width: "114px",
@@ -125,33 +113,6 @@ const Hex = ({traitSvg}) => {
                         }}
                         alt="clipped trait"
                     />
-                )}
-
-                {error && (
-                    <div style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        color: "red",
-                        fontSize: "12px",
-                        textAlign: "center"
-                    }}>
-                        Error: {error}
-                    </div>
-                )}
-
-                {!base64Svg && !error && (
-                    <div style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        color: "white",
-                        fontSize: "12px"
-                    }}>
-                        Loading...
-                    </div>
                 )}
             </div>
         </>

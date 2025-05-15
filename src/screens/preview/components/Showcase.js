@@ -34,23 +34,22 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     return (
         <div style={{
             width: 207,
-            textAlign: 'center',
-            position: 'relative'
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            position: "relative",
         }}>
+            <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
             <VStack>
                 <Hex traitSvg={traitsSvg}/>
-                <div>
-                    <div style={{marginBottom: 6, fontSize: 14, color: '#333'}}>
-                        Showcase
-                    </div>
-                    <TraitPreview
-                        width={207}
-                        height={276}
-                        borderRadius={5}
-                        layers={showcaseItems}
-                    />
-                    <GetTraitsSvg items={localItems} setTraitsSvg={setTraitsSvg}/>
-                </div>
+                <TraitPreview
+                    width={207}
+                    height={276}
+                    borderRadius={5}
+                    layers={showcaseItems}
+                />
             </VStack>
         </div>
     );
