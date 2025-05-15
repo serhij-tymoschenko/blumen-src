@@ -1,37 +1,24 @@
-import {useEffect, useState} from "react";
-import SvgBlobToCroppedPng, {toSvgBlop} from "../../../utils/helpers/SvgHelper";
 import background from "../../../res/raw/background.svg";
 import hex from "../../../res/raw/hex.svg";
+import {useEffect, useState} from "react";
+import {toPngSrc} from "../../../utils/helpers/SvgHelper";
 
 const Hex = ({traitSvg}) => {
-    const [base64Svg, setBase64Svg] = useState(null);
-    const [pngBlob, setPngBlob] = useState(null);
+
+    const [svg, setSvg] = useState(null);
 
     useEffect(() => {
-        if (!traitSvg) return;
+        if (!traitSvg) {
+            setSvg(null);
+            return;
+        }
 
-        const processImage = async () => {
+        let mounted = true;
 
-            const svgBlob = toSvgBlop({src: traitSvg});
-            if (!svgBlob) throw new Error("Failed to create SVG blob");
-
-        };
-
-        processImage();
-    }, [traitSvg]);
-
-    useEffect(() => {
-        if (!pngBlob) return;
-
-        const convertToFinalSvg = async () => {
-            const pngSrc = await new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(pngBlob);
-            });
-
-            // Increased height by 7% (from 120 to ~128.4)
-            const clippedImageSvg = `
+        toPngSrc(traitSvg)
+            .then((base64Png) => {
+                if (mounted) {
+                    const clippedImageSvg = `
                     <svg width="100%" height="107%" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <clipPath id="clip-shape">
@@ -40,34 +27,27 @@ const Hex = ({traitSvg}) => {
                                 98.2109 97.9398 96H120V0Z" />
                             </clipPath>
                         </defs>
-                        <image href="${pngSrc}" clip-path="url(#clip-shape)" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
+                        <image href="${base64Png}" clip-path="url(#clip-shape)" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
                     </svg>
                 `;
+                    const blob = new Blob([clippedImageSvg], { type: "image/svg+xml" })
+                    const svgDataUrl = URL.createObjectURL(blob)
+                    setSvg(svgDataUrl);
+                }
+            })
+            .catch((err) => {
+                console.error("Error generating PNG:", err);
+                if (mounted) setSvg(null);
+            });
 
-            console.log(pngSrc)
-
-            const base64 = window.btoa(unescape(encodeURIComponent(clippedImageSvg)));
-            setBase64Svg(`data:image/svg+xml;base64,${base64}`);
+        return () => {
+            mounted = false;
         };
-
-        convertToFinalSvg();
-    }, [pngBlob]);
+    }, [traitSvg]);
 
     return (
-        <>
-            {traitSvg && (
-                <SvgBlobToCroppedPng
-                    svgBlob={toSvgBlop({src: traitSvg})}
-                    setPngBlob={setPngBlob}
-                />
-            )}
-
-            <div style={{
-                position: "relative",
-                width: 120,
-                height: 124.5,
-                margin: "0 auto",
-            }}>
+        <div style={{position: "relative", width: 120, height: 124.5, margin: "0 auto"}}>
+            <div style={{position: "relative", width: 120, height: 124.5}}>
                 <img
                     src={background}
                     style={{
@@ -98,12 +78,12 @@ const Hex = ({traitSvg}) => {
                     alt="hex border"
                 />
 
-                {base64Svg && (
+                {svg && (
                     <img
-                        src={base64Svg}
+                        src={svg}
                         style={{
                             position: "absolute",
-                            top: "44%", // 43 on site
+                            top: "44%",
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                             width: "114px",
@@ -115,7 +95,7 @@ const Hex = ({traitSvg}) => {
                     />
                 )}
             </div>
-        </>
+        </div>
     );
 };
 
