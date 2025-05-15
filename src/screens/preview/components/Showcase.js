@@ -29,16 +29,6 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     let showcaseItems = [localItems[0], {src: traitsSvg, traitWidth: 272, traitHeight: 368}].filter(Boolean);
     showcaseItems = toSvgFile(showcaseItems);
 
-    const handleDownload = async () => {
-        const blob = new Blob([traitsSvg], {type: 'image/svg+xml'});
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `combined.svg`
-        a.click();
-    };
-
     return (
         <div style={{
             width: 272,
