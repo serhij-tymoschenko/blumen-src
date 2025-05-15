@@ -72,13 +72,13 @@ const parseSvg = async (svgString, itemIndex, combinedDefs, defsCounter) => {
     const [childWidth, childHeight] = getDimensions(svgElement);
     const innerContent = parseSvgContent(svgElement);
 
-    if (childWidth && childHeight) {
-        return {
-            content: centerContent(innerContent, childWidth, childHeight),
-            defsCounter,
-        };
-    }
-    return { content: innerContent, defsCounter };
+    const width = childWidth || 380;
+    const height = childHeight || 600;
+
+    return {
+        content: centerContent(innerContent, width, height),
+        defsCounter,
+    };
 };
 
 const GetTraitsSvg = ({ items, setTraitsSvg }) => {
@@ -100,6 +100,7 @@ const GetTraitsSvg = ({ items, setTraitsSvg }) => {
                     const { content, defsCounter: newDefsCounter } = await parseSvg(src, i, combinedDefs, defsCounter);
                     combinedSvgContent += content;
                     defsCounter = newDefsCounter;
+
                 } else if (src.startsWith("blob:")) {
                     try {
                         const response = await fetch(src);
@@ -110,8 +111,42 @@ const GetTraitsSvg = ({ items, setTraitsSvg }) => {
                     } catch (e) {
                         console.error("Failed to fetch blob SVG:", src, e);
                     }
+
                 } else if (src.startsWith("data:image")) {
-                    combinedSvgContent += `<image href="${src}" x="0" y="0" width="552" height="736" />`;
+                    try {
+                        const img = new Image();
+                        img.src = src;
+
+                        await new Promise((resolve, reject) => {
+                            img.onload = resolve;
+                            img.onerror = reject;
+                        });
+
+                        const originalWidth = img.naturalWidth;
+                        const originalHeight = img.naturalHeight;
+
+                        const maxWidth = 380;
+                        const maxHeight = 600;
+                        const scale = Math.min(maxWidth / originalWidth, maxHeight / originalHeight);
+
+                        const scaledWidth = originalWidth * scale;
+                        const scaledHeight = originalHeight * scale;
+
+                        const centerX = (552 - scaledWidth) / 2;
+                        const centerY = (736 - scaledHeight) / 2;
+
+                        combinedSvgContent += `
+              <image 
+                href="${src}" 
+                x="${centerX}" 
+                y="${centerY}" 
+                width="${scaledWidth}" 
+                height="${scaledHeight}" 
+              />
+            `;
+                    } catch (e) {
+                        console.error("Failed to load image:", src, e);
+                    }
                 }
             }
 
