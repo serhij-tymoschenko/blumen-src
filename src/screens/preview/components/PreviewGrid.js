@@ -1,8 +1,8 @@
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import VStack from "../../../stacks/VStack";
-import MatchParent from "../../../stacks/MatchParent";
 import {combine} from "../../../utils/combiner/Combiner";
+import {Stack, Typography} from "@mui/material";
+import React from "react";
 
 const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
     const snooItem = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 600">
@@ -99,12 +99,10 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
             }}
         >
             {localItems.map((item, index) => (
-                <VStack gap={0}>
-
-                    <MatchParent height={'auto'}>
+                <Stack spacing={0} direction="column">
+                    <Typography width={138 + 4} variant="caption" align="center">
                         {names[index]}
-                    </MatchParent>
-
+                    </Typography>
                     {
                         index !== 9 ?
                             <div
@@ -144,7 +142,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                                 item={toSvgFile(combine([getBottom(item, index), getTop(item, index)], 552, 736, 0))}
                             />
                     }
-                </VStack>
+                </Stack>
             ))}
         </div>
     );

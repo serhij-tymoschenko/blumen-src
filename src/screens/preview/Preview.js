@@ -1,5 +1,5 @@
 import PreviewGrid from "./components/PreviewGrid";
-import {Paper, Typography} from "@mui/material";
+import {Paper, Stack, Typography} from "@mui/material";
 
 
 import React, {useCallback, useState} from "react";
@@ -9,14 +9,13 @@ import ColorSection from "./components/ColorSection";
 import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
 import VStack from "../../stacks/VStack";
-import HStack from "../../stacks/HStack";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
     const [hairColors, setHairColors] = useState('#0000FF')
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(new Array(10).fill(""));
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
@@ -83,18 +82,25 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     )}
                 </Paper>
 
-                <HStack>
+
+                <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{height: '100%'}}
+                    alignItems={'flex-end'}
+                >
                     <Showcase items={items} eyesColor={eyesColors} bodyColor={bodyColors} hairColor={hairColors}/>
                     <PreviewGrid items={items} setItems={setItems} bodyColor={bodyColors} hairColor={hairColors}
                                  eyesColor={eyesColors}/>
-                    <VStack>
-                        <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
-                                      setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
-                    </VStack>
-                </HStack>
+                </Stack>
             </VStack>
         </Centered>
     )
 }
+
+// <VStack>
+//     <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
+//                   setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
+// </VStack>
 
 export default Preview;

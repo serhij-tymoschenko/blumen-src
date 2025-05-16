@@ -1,19 +1,11 @@
 import React from 'react';
-import {Box} from '@mui/material';
+import {Box, Stack} from '@mui/material';
 
-const VStack = ({gap = 2, children}) => {
+const VStack = ({spacing = 2, children}) => {
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'stretch',
-                justifyContent: 'center',
-                gap: gap
-            }}
-        >
+        <Stack spacing={spacing} direction="column">
             {children}
-        </Box>
+        </Stack>
     );
 };
 

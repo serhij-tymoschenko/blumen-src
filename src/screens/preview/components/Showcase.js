@@ -1,9 +1,9 @@
 import React from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import VStack from "../../../stacks/VStack";
 import Hex from "./Hex";
 import {combine} from "../../../utils/combiner/Combiner";
+import {Stack} from "@mui/material";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     let localItems = [
@@ -26,25 +26,22 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     showcaseItem = toSvgFile(showcaseItem);
 
     return (
-        <div style={{
-            width: 207,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            alignItems: "center",
-            position: "relative",
-        }}>
-            <VStack>
-                <Hex traitSvg={localTraitsSvg}/>
-                <TraitPreview
-                    width={207}
-                    height={276}
-                    borderRadius={5}
-                    item={showcaseItem}
-                />
-            </VStack>
-        </div>
+        <Stack
+            sx={{
+                height: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+            }}
+            spacing={1}
+        >
+            <Hex traitSvg={localTraitsSvg}/>
+            <TraitPreview
+                width={207}
+                height={276}
+                borderRadius={5}
+                item={showcaseItem}
+            />
+        </Stack>
     );
 };
 

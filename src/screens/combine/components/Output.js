@@ -3,7 +3,6 @@ import React from "react";
 import VStack from "../../../stacks/VStack";
 import MatchParent from "../../../stacks/MatchParent";
 import {formatSize, getSvgSize} from "../../../utils/size/SvgSize";
-import {toSvgFile} from "../../../utils/helpers/SvgHelper";
 
 const output = ({svg, svgSrc, pngSrc, onDownload}) => {
     const svgSize = getSvgSize(svg)

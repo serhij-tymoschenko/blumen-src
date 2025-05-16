@@ -29,7 +29,7 @@ const Hex = ({traitSvg}) => {
                         <image href="${base64Png}" clip-path="url(#clip-shape)" height="100%" width="100%" preserveAspectRatio="xMidYMid slice" />
                     </svg>
                 `;
-                    const blob = new Blob([clippedImageSvg], { type: "image/svg+xml" })
+                    const blob = new Blob([clippedImageSvg], {type: "image/svg+xml"})
                     const svgDataUrl = URL.createObjectURL(blob)
                     setSvg(svgDataUrl);
                 }
@@ -41,55 +41,50 @@ const Hex = ({traitSvg}) => {
     }, [traitSvg]);
 
     return (
-        <div style={{position: "relative", width: 120, height: 124.5, margin: "0 auto"}}>
-            <div style={{position: "relative", width: 120, height: 124.5}}>
+        <div style={{position: "relative", width: 120, height: 124.5}}>
+            <img
+                src={background}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                    pointerEvents: "none",
+                }}
+            />
+
+            <img
+                src={hex}
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "contain",
+                    pointerEvents: "none",
+                }}
+            />
+
+            {svg && (
                 <img
-                    src={background}
+                    src={svg}
                     style={{
                         position: "absolute",
-                        top: "50%",
+                        top: "43%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: "114px",
-                        height: "114px",
+                        width: "120px",
+                        height: "120px",
                         objectFit: "contain",
                         pointerEvents: "none",
                     }}
-                    alt="background"
                 />
-
-                <img
-                    src={hex}
-                    style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "114px",
-                        height: "114px",
-                        objectFit: "contain",
-                        pointerEvents: "none",
-                    }}
-                    alt="hex border"
-                />
-
-                {svg && (
-                    <img
-                        src={svg}
-                        style={{
-                            position: "absolute",
-                            top: "44%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            width: "114px",
-                            height: "114px",
-                            objectFit: "contain",
-                            pointerEvents: "none",
-                        }}
-                        alt="clipped trait"
-                    />
-                )}
-            </div>
+            )}
         </div>
     );
 };
