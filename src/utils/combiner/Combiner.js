@@ -54,7 +54,9 @@ export const combine = (items, requiredWidth, requiredHeight, backgroundIndex = 
 
     const defs = `
         <defs>
-            <clipPath id="clip-shape"></clipPath>
+            <clipPath id="clipRect">
+        <rect width="552" height="736" rx="10%" ry="10%" />
+    </clipPath>
             <style>
                 ${Array.from(combinedStyles).join("\n")}
             </style>
@@ -63,7 +65,8 @@ export const combine = (items, requiredWidth, requiredHeight, backgroundIndex = 
 
     return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
             ${defs}
-            ${combinedContent}
+            <g clip-path="url(#clipRect)">${combinedContent}</g>
+            
         </svg>`;
 };
 
@@ -101,6 +104,9 @@ export const combineHorizontally = (items, requiredWidth, requiredHeight) => {
 
         const defs = `
         <defs>
+        <clipPath id="clipRect">
+        <rect width="552" height="736" rx="2%" ry="10%" />
+    </clipPath>
             <style>
                 ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')};.
             </style>
