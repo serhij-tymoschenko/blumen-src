@@ -1,10 +1,9 @@
 import React from "react";
 import JSZip from "jszip";
 import {toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {combine} from "../../../utils/combiner/Combiner";
+import {combine, combineHorizontally} from "../../../utils/combiner/Combiner";
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button} from "@mui/material";
-import {combineGrid} from "../../../utils/combiner/CombineGrid";
 
 const addFromUrl = async (zip, url, filename) => {
     const response = await fetch(url);
@@ -62,8 +61,13 @@ const ZipDownload = ({items, showcase, hexUrl}) => {
             await addFromUrl(zip, toSvgFile(svg), `${names[i]}.svg`)
         }
 
+        const firstRowSvg = combineHorizontally(localItems.slice(0, 5), 552, 736);
+        const secondRowSvg = combineHorizontally(localItems.slice(5), 552, 736);
+
         await addFromUrl(zip, hexUrl, "Hex.png")
         await addFromUrl(zip, toSvgFile(showcase), "Showcase.svg")
+        await addFromUrl(zip, toSvgFile(firstRowSvg), "First row.svg")
+        await addFromUrl(zip, toSvgFile(secondRowSvg), "Second row.svg")
 
         const content = await zip.generateAsync({ type: "blob" });
 
