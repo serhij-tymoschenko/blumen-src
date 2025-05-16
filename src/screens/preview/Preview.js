@@ -12,6 +12,8 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
     const [items, setItems] = useState(new Array(10).fill(""));
+    const [showcase, setShowcase] = useState(null);
+    const [hex, setHex] = useState(null);
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);

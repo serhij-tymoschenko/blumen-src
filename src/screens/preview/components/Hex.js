@@ -3,7 +3,7 @@ import hex from "../../../res/raw/hex.svg";
 import {useEffect, useState} from "react";
 import {toPngSrc} from "../../../utils/helpers/SvgHelper";
 
-const Hex = ({traitSvg}) => {
+const Hex = ({traitSvg, setHex}) => {
     const [svg, setSvg] = useState(null);
 
     useEffect(() => {

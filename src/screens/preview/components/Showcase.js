@@ -5,7 +5,7 @@ import Hex from "./Hex";
 import {combine} from "../../../utils/combiner/Combiner";
 import {Stack} from "@mui/material";
 
-const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
+const Showcase = ({items, bodyColor, hairColor, eyesColor, setHex, setShowcase}) => {
     let localItems = [
         items[9],
         items[6],
@@ -23,6 +23,7 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     const localTraitsSvg = combine(localItems.slice(1), 552, 736);
 
     let showcaseItem = combine(localItems, 552, 736, 0)
+    setShowcase(showcaseItem)
     showcaseItem = toSvgFile(showcaseItem);
 
     return (
