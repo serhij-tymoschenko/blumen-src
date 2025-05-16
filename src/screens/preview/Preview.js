@@ -4,7 +4,10 @@ import React, {useCallback, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
-import Centered from "../../stacks/Centered";;
+import Centered from "../../stacks/Centered";
+import ZipDownload from "./components/ZipDownload";
+
+;
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -138,14 +141,25 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                             alignSelf: 'center'
                         }}
                     >
-                        <ColorSection
-                            bodyColor={bodyColors}
-                            setBodyColor={setBodyColors}
-                            hairColor={hairColors}
-                            setHairColor={setHairColors}
-                            eyesColor={eyesColors}
-                            setEyesColor={setEyesColors}
-                        />
+                        <Stack
+                            direction="column"
+                            spacing={2}
+                            sx={{
+                                width: '100%',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                            <ColorSection
+                                bodyColor={bodyColors}
+                                setBodyColor={setBodyColors}
+                                hairColor={hairColors}
+                                setHairColor={setHairColors}
+                                eyesColor={eyesColors}
+                                setEyesColor={setEyesColors}
+                            />
+                            {hexUrl && <ZipDownload items={items} hexUrl={hexUrl} showcase={showcase}/>}
+                        </Stack>
                     </Box>
                 </Stack>
             </Stack>

@@ -60,12 +60,10 @@ export const combine = (items, requiredWidth, requiredHeight, backgroundIndex = 
         </defs>
     `;
 
-    return `
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
+    return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
             ${defs}
             ${combinedContent}
-        </svg>
-    `.trim();
+        </svg>`;
 };
 
 export const insertPngIntoSvg = (svg, png) => {
@@ -76,50 +74,3 @@ export const insertPngIntoSvg = (svg, png) => {
     return svg.slice(0, insertIndex) + injected + svg.slice(insertIndex);
 };
 
-const extractSvgDefs = (svg) => {
-    const defs = svg.match(/<defs[^>]*>([\s\S]*?)<\/defs>/i);
-    return defs ? defs[1] : "";
-};
-
-export const combineHex = (items, requiredWidth, requiredHeight, backgroundIndex = null) => {
-    let combinedContent = "";
-    let combinedDefs = new Set();
-
-    if (!items || !Array.isArray(items)) return "";
-
-    for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-        const svg = items[itemIndex]
-        const defs = extractSvgDefs(svg);
-        if (defs) combinedDefs.add(defs);
-
-        const content = extractSvgContent(svg);
-        const [offsetX, offsetY] = (itemIndex === backgroundIndex)
-            ? [0, 0]
-            : [(requiredWidth - 120) / 2, (requiredHeight - 120) / 2];
-
-        combinedContent += `
-            <g transform="translate(${offsetX}, ${offsetY})">
-                ${content}
-            </g>`
-    }
-
-    const defs = `
-        <defs>
-                ${Array.from(combinedDefs).join("\n")}
-        </defs>
-    `;
-
-    console.log(`
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
-            ${defs}
-            ${combinedContent}
-        </svg>
-    `.trim())
-
-    return `
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
-            ${defs}
-            ${combinedContent}
-        </svg>
-    `.trim();
-}

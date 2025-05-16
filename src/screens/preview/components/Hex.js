@@ -42,7 +42,7 @@ const Hex = ({traitSvg, setHexUrl}) => {
         };
     }, [traitSvg]);
 
-    const handleOnLoaded = () => {
+    const handleOnLoad = () => {
         htmlToImage.toPng(captureRef.current)
             .then((dataUrl) => {
                 setHexUrl(dataUrl);
@@ -90,7 +90,7 @@ const Hex = ({traitSvg, setHexUrl}) => {
                         width="120"
                         height="120"
                         preserveAspectRatio="xMidYMid meet"
-                        onLoad={handleOnLoaded}
+                        onLoad={handleOnLoad}
                     />
                 )}
             </svg>
