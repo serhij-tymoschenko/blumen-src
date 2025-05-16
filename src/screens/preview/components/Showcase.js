@@ -3,7 +3,7 @@ import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import VStack from "../../../stacks/VStack";
 import Hex from "./Hex";
-import {combine} from "../../../utils/combiner/Combiner1";
+import {combine} from "../../../utils/combiner/Combiner";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor}) => {
     let localItems = [

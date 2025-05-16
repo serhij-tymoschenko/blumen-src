@@ -1,25 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
 import correct from "../../utils/corrector/Corrector";
-import {combine} from "../../utils/combiner/Combiner";
+import {combine, insertPngIntoSvg} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
 import Centered from "../../stacks/Centered";
 import HStack from "../../stacks/HStack";
 import VStack from "../../stacks/VStack";
+import {toSvgFile} from "../../utils/helpers/SvgHelper";
 
 const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
-    const [svgSrc, setSvgSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
+    const [svgSrc, setSvgSrc] = useState(null);
     const [svgName, setSvgName] = useState(null);
-    const [pngSrc, setPngSrc] = useState({src: null, traitWidth: 0, traitHeight: 0});
-    const [svgSize, setSvgSize] = useState(0);
-    const [pngSize, setPngSize] = useState(0);
+    const [pngSrc, setPngSrc] = useState(null);
     const [svg, setSvg] = useState(null);
 
     const REQUIRED_RATIO = 380 / 600;
     const hasExactRatio = (width, height) => {
         return (width / height) === REQUIRED_RATIO;
     };
+
+    useEffect(() => {
+        if (!svgSrc) {
+            setSvg(null);
+            return;
+        }
+        const result = pngSrc
+            ? combine([svgSrc, pngSrc], 380, 600)
+            : combine([svgSrc], 380, 600);
+
+        setSvg(result);
+    }, [svgSrc, pngSrc]);
 
     const onSvgChange = (event) => {
         const file = event.target.files[0];
@@ -33,22 +44,15 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                         setOpenSnackbar(true);
                         return;
                     }
-                    setSvgSize(file.size);
                     setSvgName(file.name);
-                    setSvgSrc({
-                        src: reader.result,
-                        traitWidth: 190,
-                        traitHeight: 300
-                    });
                 };
                 img.src = reader.result;
             };
             reader.readAsDataURL(file);
 
             const textReader = new FileReader();
-
             textReader.onloadend = () => {
-                setSvg(correct(textReader.result));
+                setSvgSrc(correct(textReader.result));
             };
             textReader.readAsText(file);
         }
@@ -66,9 +70,7 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                         setOpenSnackbar(true);
                         return;
                     }
-                    setPngSize(file.size);
-                    setPngSrc({src: reader.result, traitWidth: 380, traitHeight: 600});
-
+                    setPngSrc(reader.result);
                 };
                 img.src = reader.result;
             };
@@ -77,7 +79,10 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     };
 
     const onDownload = () => {
-        let output = pngSrc ? combine(svg, pngSrc) : svg;
+        const output = (pngSrc) ?
+            insertPngIntoSvg(svgSrc, pngSrc)
+            : svgSrc
+
         const blob = new Blob([output], {type: 'text/plain'});
         const url = URL.createObjectURL(blob);
 
@@ -97,14 +102,13 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                         onDownload={onDownload}
                     />
                     <Output
-                        svgSize={svgSize}
-                        pngSize={pngSize}
+                        svg={svg}
                         svgSrc={svgSrc}
                         pngSrc={pngSrc}
                         onDownload={onDownload}
                     />
                 </VStack>
-                <TraitPreview layers={[svgSrc, pngSrc] || ""}/>
+                {svg && <TraitPreview key={svg} item={toSvgFile(svg)} width={380} height={600}/>}
             </HStack>
         </Centered>
     );

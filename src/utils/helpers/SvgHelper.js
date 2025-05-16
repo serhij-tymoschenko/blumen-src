@@ -8,7 +8,7 @@ export const toSvgFile = (item)=> {
 }
 
 export const toSvgBlob = (item) => {
-    return new Blob([item.src], {type: 'image/svg+xml'})
+    return new Blob([item], {type: 'image/svg+xml'})
 }
 
 export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>

@@ -2,7 +2,7 @@ import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import VStack from "../../../stacks/VStack";
 import MatchParent from "../../../stacks/MatchParent";
-import {combine} from "../../../utils/combiner/Combiner1";
+import {combine} from "../../../utils/combiner/Combiner";
 
 const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
     const snooItem = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 600">

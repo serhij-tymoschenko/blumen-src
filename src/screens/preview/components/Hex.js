@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {toPngSrc} from "../../../utils/helpers/SvgHelper";
 
 const Hex = ({traitSvg}) => {
-
     const [svg, setSvg] = useState(null);
 
     useEffect(() => {
@@ -35,10 +34,6 @@ const Hex = ({traitSvg}) => {
                     setSvg(svgDataUrl);
                 }
             })
-            .catch((err) => {
-                console.error("Error generating PNG:", err);
-                if (mounted) setSvg(null);
-            });
 
         return () => {
             mounted = false;
