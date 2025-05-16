@@ -1,12 +1,9 @@
 import PreviewGrid from "./components/PreviewGrid";
 import {Box, Paper, Stack, Typography} from "@mui/material";
-
-
 import React, {useCallback, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
-import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
@@ -18,46 +15,78 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
+        const isSvg = file.type === 'image/svg+xml';
 
-        // Convert object URL to Blob (you must define this function correctly)
-        const blob = await objectUrlToBlob(objectUrl);
-        const isSvg = blob.type === 'image/svg+xml';
-
-        // Read the blob content
         const localSrc = await new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result);
             reader.onerror = reject;
 
             if (isSvg) {
-                reader.readAsText(blob); // for inline SVG content
+                reader.readAsText(file);
             } else {
-                reader.readAsDataURL(blob); // for image preview
+                reader.readAsDataURL(file);
             }
         });
 
-        console.log(localSrc)
-        return localSrc; // either raw SVG text or data:image/... base64
+        const {width, height} = await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                resolve({width: img.naturalWidth, height: img.naturalHeight});
+                URL.revokeObjectURL(objectUrl);  // clean up
+            };
+            img.onerror = () => {
+                resolve({width: null, height: null});
+                URL.revokeObjectURL(objectUrl);
+            };
+            img.src = localSrc;
+        });
+
+        return {src: localSrc, width, height};
     };
 
+    const isScaledRatio = (width, height, baseWidth, baseHeight) => {
+        if (width * baseHeight !== height * baseWidth) return false;
+        const widthRatio = width / baseWidth;
+        const heightRatio = height / baseHeight;
+
+        return Number.isInteger(widthRatio) && Number.isInteger(heightRatio);
+    };
 
     const onDrop = useCallback(async (acceptedFiles) => {
-        // Wait for all images to be processed
-        const newItems = await Promise.all(
-            acceptedFiles.map((file) => getImageData(file))
-        );
+        if (acceptedFiles.length > 10) {
+            setSnackbarMessage(`Max: 10 files`, {variant: 'error'});
+            setOpenSnackbar(true);
+            return
+        }
 
-        setItems(newItems);
-    }, []);
+        const processedItems = await Promise.all(acceptedFiles.map(async (file) => {
+            const data = await getImageData(file);
+            return {file, data};
+        }));
+
+        const validItems = [];
+        let background = ""
+
+        processedItems.forEach(({file, data}) => {
+            if (isScaledRatio(data.width, data.height, 380, 600)) {
+                validItems.push(data.src);
+            } else if (isScaledRatio(data.width, data.height, 552, 736)) {
+                background = data.src
+            } else {
+                setSnackbarMessage(`${file.name} has invalid ratio`, {variant: 'error'});
+                setOpenSnackbar(true);
+            }
+        });
+
+        setItems([...validItems, ...new Array(10 - validItems.length - 1).fill(""), background]);
+    }, [setOpenSnackbar, setSnackbarMessage]);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
-        onDrop,
-        accept: {'image/*': []},
-        multiple: true,
+        onDrop, accept: {'image/*': []}, multiple: true,
     });
 
-    return (
-        <Centered>
+    return (<Centered>
             <Stack direction="column" spacing={2} sx={{justifyContent: 'center', alignItems: 'center'}}>
                 <Paper
                     {...getRootProps()}
@@ -74,21 +103,17 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     }}
                 >
                     <input {...getInputProps()} />
-                    {isDragActive ? (
-                        <Typography>Drop the images here ...</Typography>
-                    ) : (
-                        <Typography>Drag and drop images here, or click to select files</Typography>
-                    )}
+                    {isDragActive ? (<Typography>Drop the images here ...</Typography>) : (
+                        <Typography>Drag and drop images here, or click to select files</Typography>)}
                 </Paper>
-
 
                 <Stack
                     direction="row"
                     spacing={2}
-                    sx={{ height: '100%' }}
+                    sx={{height: '100%'}}
                     justifyContent="center"
                 >
-                    <Box sx={{ alignSelf: 'flex-end' }}>
+                    <Box sx={{alignSelf: 'flex-end'}}>
                         <Showcase
                             items={items}
                             eyesColor={eyesColors}
@@ -102,7 +127,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                         bodyColor={bodyColors}
                         hairColor={hairColors}
                         eyesColor={eyesColors}
-                        sx={{ alignSelf: 'flex-end' }}
+                        sx={{alignSelf: 'flex-end'}}
                     />
                     <Box
                         sx={{
