@@ -4,7 +4,7 @@ import React, {useCallback, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
-import Centered from "../../stacks/Centered";
+import Centered from "../../stacks/Centered";;
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -13,7 +13,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     const [items, setItems] = useState(new Array(10).fill(""));
     const [showcase, setShowcase] = useState(null);
-    const [hex, setHex] = useState(null);
+    const [hexUrl, setHexUrl] = useState("");
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
@@ -121,6 +121,8 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                             eyesColor={eyesColors}
                             bodyColor={bodyColors}
                             hairColor={hairColors}
+                            setHexUrl={setHexUrl}
+                            setShowcase={setShowcase}
                         />
                     </Box>
                     <PreviewGrid

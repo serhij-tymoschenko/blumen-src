@@ -5,7 +5,7 @@ import Hex from "./Hex";
 import {combine} from "../../../utils/combiner/Combiner";
 import {Stack} from "@mui/material";
 
-const Showcase = ({items, bodyColor, hairColor, eyesColor, setHex, setShowcase}) => {
+const Showcase = ({items, bodyColor, hairColor, eyesColor, setHexUrl, setShowcase}) => {
     let localItems = [
         items[9],
         items[6],
@@ -17,7 +17,7 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor, setHex, setShowcase})
         items[4],
         items[7],
         items[8],
-    ].filter(Boolean)
+    ]
 
     localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor);
     const localTraitsSvg = combine(localItems.slice(1), 552, 736);
@@ -35,7 +35,7 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor, setHex, setShowcase})
             }}
             spacing={1}
         >
-            <Hex traitSvg={localTraitsSvg}/>
+            <Hex traitSvg={localTraitsSvg} setHexUrl={setHexUrl}/>
             <TraitPreview
                 width={207}
                 height={276}

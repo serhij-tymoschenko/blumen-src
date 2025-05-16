@@ -1,10 +1,12 @@
 import background from "../../../res/raw/background.svg";
 import hex from "../../../res/raw/hex.svg";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {toPngSrc} from "../../../utils/helpers/SvgHelper";
+import * as htmlToImage from 'html-to-image';
 
-const Hex = ({traitSvg, setHex}) => {
+const Hex = ({traitSvg, setHexUrl}) => {
     const [svg, setSvg] = useState(null);
+    const captureRef = useRef(null);
 
     useEffect(() => {
         if (!traitSvg) {
@@ -40,51 +42,58 @@ const Hex = ({traitSvg, setHex}) => {
         };
     }, [traitSvg]);
 
+    const handleOnLoaded = () => {
+        htmlToImage.toPng(captureRef.current)
+            .then((dataUrl) => {
+                setHexUrl(dataUrl);
+            })
+    }
+
     return (
         <div style={{position: "relative", width: 120, height: 124.5}}>
-            <img
-                src={background}
+            <svg
+                ref={captureRef}
+                width="120"
+                height="124.5"
+                viewBox="0 -7 120 131.5"
+                xmlns="http://www.w3.org/2000/svg"
                 style={{
                     position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "120px",
-                    height: "120px",
-                    objectFit: "contain",
+                    top: 0,
+                    left: 0,
                     pointerEvents: "none",
                 }}
-            />
-
-            <img
-                src={hex}
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "120px",
-                    height: "120px",
-                    objectFit: "contain",
-                    pointerEvents: "none",
-                }}
-            />
-
-            {svg && (
-                <img
-                    src={svg}
-                    style={{
-                        position: "absolute",
-                        top: "43%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "120px",
-                        height: "120px",
-                        objectFit: "contain",
-                        pointerEvents: "none",
-                    }}
+            >
+                <image
+                    href={background}
+                    x="0"
+                    y="2.25"
+                    width="120"
+                    height="120"
+                    preserveAspectRatio="xMidYMid meet"
                 />
-            )}
+
+                <image
+                    href={hex}
+                    x="0"
+                    y="2.25"
+                    width="120"
+                    height="120"
+                    preserveAspectRatio="xMidYMid meet"
+                />
+
+                {svg && (
+                    <image
+                        href={svg}
+                        x="0"
+                        y="-6.465"
+                        width="120"
+                        height="120"
+                        preserveAspectRatio="xMidYMid meet"
+                        onLoad={handleOnLoaded}
+                    />
+                )}
+            </svg>
         </div>
     );
 };
