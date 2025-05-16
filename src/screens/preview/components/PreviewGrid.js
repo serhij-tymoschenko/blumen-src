@@ -92,7 +92,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
         <div
             style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(5, 1fr)', // 5 items per row
+                gridTemplateColumns: 'repeat(5, 1fr)',
                 gap: '16px',
                 alignItems: 'stretch',
                 justifyItems: 'center',

@@ -1,5 +1,5 @@
 import PreviewGrid from "./components/PreviewGrid";
-import {Paper, Stack, Typography} from "@mui/material";
+import {Box, Paper, Stack, Typography} from "@mui/material";
 
 
 import React, {useCallback, useState} from "react";
@@ -8,7 +8,6 @@ import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
 import {objectUrlToBlob} from "../../utils/helpers/ObjectHelper";
 import Centered from "../../stacks/Centered";
-import VStack from "../../stacks/VStack";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -59,19 +58,19 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     return (
         <Centered>
-            <VStack>
+            <Stack direction="column" spacing={2} sx={{justifyContent: 'center', alignItems: 'center'}}>
                 <Paper
                     {...getRootProps()}
                     elevation={3}
                     sx={{
-                        width: '100%',
-                        maxWidth: 800,
+                        width: "89%",
                         border: '2px dashed #aaa',
                         padding: 4,
                         textAlign: 'center',
+                        alignSelf: 'flex-start',
                         backgroundColor: isDragActive ? '#f0f0f0' : '#fafafa',
                         cursor: 'pointer',
-                        mb: 4, // space below
+                        mb: 4,
                     }}
                 >
                     <input {...getInputProps()} />
@@ -86,21 +85,44 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                 <Stack
                     direction="row"
                     spacing={2}
-                    sx={{height: '100%'}}
-                    alignItems={'flex-end'}
+                    sx={{ height: '100%' }}
+                    justifyContent="center"
                 >
-                    <Showcase items={items} eyesColor={eyesColors} bodyColor={bodyColors} hairColor={hairColors}/>
-                    <PreviewGrid items={items} setItems={setItems} bodyColor={bodyColors} hairColor={hairColors}
-                                 eyesColor={eyesColors}/>
+                    <Box sx={{ alignSelf: 'flex-end' }}>
+                        <Showcase
+                            items={items}
+                            eyesColor={eyesColors}
+                            bodyColor={bodyColors}
+                            hairColor={hairColors}
+                        />
+                    </Box>
+                    <PreviewGrid
+                        items={items}
+                        setItems={setItems}
+                        bodyColor={bodyColors}
+                        hairColor={hairColors}
+                        eyesColor={eyesColors}
+                        sx={{ alignSelf: 'flex-end' }}
+                    />
+                    <Box
+                        sx={{
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <ColorSection
+                            bodyColor={bodyColors}
+                            setBodyColor={setBodyColors}
+                            hairColor={hairColors}
+                            setHairColor={setHairColors}
+                            eyesColor={eyesColors}
+                            setEyesColor={setEyesColors}
+                        />
+                    </Box>
                 </Stack>
-            </VStack>
+            </Stack>
         </Centered>
     )
 }
 
-// <VStack>
-//     <ColorSection bodyColor={bodyColors} setBodyColor={setBodyColors} hairColor={hairColors}
-//                   setHairColor={setHairColors} eyesColor={eyesColors} setEyesColor={setEyesColors}/>
-// </VStack>
 
 export default Preview;
