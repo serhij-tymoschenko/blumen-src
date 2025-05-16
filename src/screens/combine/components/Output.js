@@ -2,8 +2,12 @@ import {Button, Typography} from "@mui/material";
 import React from "react";
 import VStack from "../../../stacks/VStack";
 import MatchParent from "../../../stacks/MatchParent";
+import {formatSize, getSvgSize} from "../../../utils/size/SvgSize";
+import {toSvgFile} from "../../../utils/helpers/SvgHelper";
 
-const output = ({svgSize, svgSrc, pngSrc, onDownload}) => {
+const output = ({svg, svgSrc, pngSrc, onDownload}) => {
+    const svgSize = getSvgSize(svg)
+
     return svgSrc ? <VStack>
         <MatchParent>
             <VStack>
@@ -20,7 +24,7 @@ const output = ({svgSize, svgSrc, pngSrc, onDownload}) => {
                             : 'textPrimary'
                     }
                 >
-                    Size: {svgSize}
+                    Size: {formatSize(svgSize)}
                 </Typography>
             </VStack>
         </MatchParent>
