@@ -5,15 +5,14 @@ import correct from "../../utils/corrector/Corrector";
 import {combine, insertPngIntoSvg} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
 import Centered from "../../stacks/Centered";
-import HStack from "../../stacks/HStack";
-import VStack from "../../stacks/VStack";
 import {toSvgFile} from "../../utils/helpers/SvgHelper";
+import {Stack} from "@mui/material";
 
 const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [svgSrc, setSvgSrc] = useState(null);
     const [svgName, setSvgName] = useState(null);
     const [pngSrc, setPngSrc] = useState(null);
-    const [svg, setSvg] = useState(null);
+    const [svg, setSvg] = useState("<svg></svg>");
 
     const REQUIRED_RATIO = 380 / 600;
     const hasExactRatio = (width, height) => {
@@ -94,8 +93,9 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     return (
         <Centered>
-            <HStack>
-                <VStack>
+            <Stack spacing={2} direction="row">
+                <Stack spacing={2} alignSelf={'center'}
+                >
                     <Actions
                         onSvgChange={onSvgChange}
                         onPngChange={onPngChange}
@@ -107,9 +107,9 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                         pngSrc={pngSrc}
                         onDownload={onDownload}
                     />
-                </VStack>
-                {svg && <TraitPreview key={svg} item={toSvgFile(svg)} width={380} height={600}/>}
-            </HStack>
+                </Stack>
+                <TraitPreview key={svg} item={toSvgFile(svg)} width={285} height={450}/>
+            </Stack>
         </Centered>
     );
 };

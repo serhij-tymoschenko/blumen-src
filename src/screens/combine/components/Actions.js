@@ -1,10 +1,9 @@
-import {Button} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import React from "react";
-import VStack from "../../../stacks/VStack";
 
 const Actions = ({onSvgChange, onPngChange}) => {
     return (
-        <VStack>
+        <Stack spacing={2} direction="column">
             <Button variant="contained" component="label">
                 Upload SVG
                 <input hidden type="file" accept=".svg" onChange={onSvgChange}/>
@@ -14,7 +13,7 @@ const Actions = ({onSvgChange, onPngChange}) => {
                 Upload PNG
                 <input hidden type="file" accept=".png" onChange={onPngChange}/>
             </Button>
-        </VStack>
+        </Stack>
     )
 };
 
