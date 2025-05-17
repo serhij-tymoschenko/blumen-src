@@ -158,7 +158,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                                 eyesColor={eyesColors}
                                 setEyesColor={setEyesColors}
                             />
-                            {hexUrl && <ZipDownload items={items} hexUrl={hexUrl} showcase={showcase}/>}
+                            <ZipDownload items={items} hexUrl={hexUrl} showcase={showcase}/>
                         </Stack>
                     </Box>
                 </Stack>

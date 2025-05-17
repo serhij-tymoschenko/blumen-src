@@ -2,7 +2,7 @@
   "name": "rca-utils",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://serhij-tymoschenko.github.io/rca-utils-page",
+  "homepage": "https://serhij-tymoschenko.github.io/blume",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

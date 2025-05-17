@@ -24,10 +24,10 @@ const Main = () => {
 
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-            <PageHeader title="RCA utils"
-                        activeButton={activeButton}
-                        onButtonClick={onButtonClick}
+        <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+            <PageHeader
+                activeButton={activeButton}
+                onButtonClick={onButtonClick}
             />
             {screen}
             <Snackbar
