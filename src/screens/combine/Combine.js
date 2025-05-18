@@ -5,7 +5,7 @@ import correct from "../../utils/svg/corrector/Corrector";
 import {combineTogether, insertPngIntoSvg} from "../../utils/svg/CombineHelper";
 import {TraitPreview} from "../components/TraitPreview";
 import {toSvgFile} from "../../utils/svg/SvgHelper";
-import {Stack} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 
 const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [svgSrc, setSvgSrc] = useState(null);
