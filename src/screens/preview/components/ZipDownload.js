@@ -1,7 +1,7 @@
 import React from "react";
 import JSZip from "jszip";
 import {toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {combine, combineHorizontally} from "../../../utils/combiner/Combiner";
+import {combineTogether, combineHorizontally} from "../../../utils/combiner/Combiner";
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button} from "@mui/material";
 
@@ -55,7 +55,7 @@ const ZipDownload = ({items, showcase, hex}) => {
         for (let i = 0; i < items.length; i++) {
             const top = (i !== 9 && i !== 6) ? items[i] : snooItem
             const bottom = (i !== 9 && i !== 6) ? snooItem : items[i]
-            const svg = combine([bottom, top], 552, 736, (i === 9) ? 0 : null)
+            const svg = combineTogether([bottom, top], 552, 736, (i === 9) ? 0 : null)
             localItems.push(svg)
 
             await addFromUrl(zip, toSvgFile(svg), `${names[i]}.svg`)

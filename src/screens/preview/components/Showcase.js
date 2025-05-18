@@ -2,7 +2,7 @@ import React from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
 import Hex from "./Hex";
-import {combine} from "../../../utils/combiner/Combiner";
+import {combineTogether} from "../../../utils/combiner/Combiner";
 import {Stack} from "@mui/material";
 
 const Showcase = ({items, bodyColor, hairColor, eyesColor, hex, setHex, setShowcase}) => {
@@ -20,9 +20,9 @@ const Showcase = ({items, bodyColor, hairColor, eyesColor, hex, setHex, setShowc
     ]
 
     localItems = replaceColors(localItems, bodyColor, hairColor, eyesColor);
-    const localTraitsSvg = combine(localItems.slice(1), 552, 736);
+    const localTraitsSvg = combineTogether(localItems.slice(1), 552, 736);
 
-    let showcaseItem = combine(localItems, 552, 736, 0)
+    let showcaseItem = combineTogether(localItems, 552, 736, 0)
     setShowcase(showcaseItem)
     showcaseItem = toSvgFile(showcaseItem);
 

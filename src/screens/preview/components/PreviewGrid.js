@@ -1,6 +1,6 @@
 import {TraitPreview} from "../../components/TraitPreview";
 import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {combine} from "../../../utils/combiner/Combiner";
+import {combineTogether} from "../../../utils/combiner/Combiner";
 import {Stack, Typography} from "@mui/material";
 import React from "react";
 
@@ -129,7 +129,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                                     traitHeight={150}
                                     traitWidth={95}
                                     borderRadius={5}
-                                    item={toSvgFile(combine([getBottom(item, index), getTop(item, index)], 552, 736))}
+                                    item={toSvgFile(combineTogether([getBottom(item, index), getTop(item, index)], 552, 736))}
                                 />
                             </div>
                             :
@@ -139,7 +139,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                                 traitWidth={138}
                                 traitHeight={184}
                                 borderRadius={5}
-                                item={toSvgFile(combine([getBottom(item, index), getTop(item, index)], 552, 736, 0))}
+                                item={toSvgFile(combineTogether([getBottom(item, index), getTop(item, index)], 552, 736, 0))}
                             />
                     }
                 </Stack>

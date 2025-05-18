@@ -8,7 +8,7 @@ const extractSvgContent = (svg) => {
     return content ? content[1].replace(/<defs[^>]*>[\s\S]*?<\/defs>/gi, "") : "";
 };
 
-export const combine = (items, requiredWidth, requiredHeight, backgroundIndex = null) => {
+export const combineTogether = (items, requiredWidth, requiredHeight, backgroundIndex = null) => {
     let combinedContent = "";
     let combinedStyles = new Set();
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
 import correct from "../../utils/corrector/Corrector";
-import {combine, insertPngIntoSvg} from "../../utils/combiner/Combiner";
+import {combineTogether, insertPngIntoSvg} from "../../utils/combiner/Combiner";
 import {TraitPreview} from "../components/TraitPreview";
 import Centered from "../../stacks/Centered";
 import {toSvgFile} from "../../utils/helpers/SvgHelper";
@@ -25,8 +25,8 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
             return;
         }
         const result = pngSrc
-            ? combine([svgSrc, pngSrc], 380, 600)
-            : combine([svgSrc], 380, 600);
+            ? combineTogether([svgSrc, pngSrc], 380, 600)
+            : combineTogether([svgSrc], 380, 600);
 
         setSvg(result);
     }, [svgSrc, pngSrc]);
