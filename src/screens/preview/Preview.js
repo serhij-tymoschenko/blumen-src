@@ -15,9 +15,9 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [hairColors, setHairColors] = useState('#0000FF')
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
-    const [items, setItems] = useState(new Array(10).fill("<div></div>"));
+    const [items, setItems] = useState(new Array(10).fill("<svg></svg>"));
 
-    const [snooItems, setSnooItems] = useState([]);
+    const [snooItems, setSnooItems] = useState(getSnooItems(items), bodyColors, hairColors, eyesColors);
     const [showcase, setShowcase] = useState(null);
     const [hex, setHex] = useState("");
 
