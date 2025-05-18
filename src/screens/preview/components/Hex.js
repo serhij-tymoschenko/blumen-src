@@ -1,5 +1,5 @@
 import {toPngSrc, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {getHexSrc} from "../../../utils/HexSrc";
+import {getHexSrc} from "../../../utils/SvgSrc";
 
 const Hex = ({traitSvg, hex, setHex}) => {
     toPngSrc(traitSvg)

@@ -80,7 +80,6 @@ export const toPngSrc = (svgString) => {
             const croppedCtx = croppedCanvas.getContext("2d");
             croppedCtx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
-            // Get base64 PNG data URL here (default MIME is image/png)
             const base64Png = croppedCanvas.toDataURL("image/png");
 
             URL.revokeObjectURL(url);

@@ -1,8 +1,8 @@
 import React from 'react';
 import {FormControlLabel, Stack, Switch, Typography} from '@mui/material';
-import ButtonType from "../../data/models/ButtonType";
+import ScreenType from "../../data/models/ScreenType";
 
-const PageHeader = ({activeButton, onButtonClick}) => {
+const Header = ({activeButton, onButtonClick}) => {
     return (
         <Stack
             direction="row"
@@ -17,12 +17,12 @@ const PageHeader = ({activeButton, onButtonClick}) => {
             <FormControlLabel
                 control={
                     <Switch
-                        checked={activeButton === ButtonType.PREVIEW}
+                        checked={activeButton === ScreenType.PREVIEW}
                         onChange={() =>
                             onButtonClick(
-                                activeButton === ButtonType.COMBINE
-                                    ? ButtonType.PREVIEW
-                                    : ButtonType.COMBINE
+                                activeButton === ScreenType.COMBINE
+                                    ? ScreenType.PREVIEW
+                                    : ScreenType.COMBINE
                             )
                         }
                         color="primary"
@@ -36,4 +36,4 @@ const PageHeader = ({activeButton, onButtonClick}) => {
     );
 };
 
-export default PageHeader;
+export default Header;

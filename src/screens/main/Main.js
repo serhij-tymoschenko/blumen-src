@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import ButtonType from "../../data/models/ButtonType";
+import ScreenType from "../../data/models/ScreenType";
 import Combine from "../combine/Combine";
 import Preview from "../preview/Preview";
 import {Alert, Box, Snackbar} from "@mui/material";
-import PageHeader from "../components/PageHeader";
+import Header from "../components/Header";
 
 const Main = () => {
-    const [activeButton, setActiveButton] = useState(ButtonType.PREVIEW);
+    const [activeButton, setActiveButton] = useState(ScreenType.PREVIEW);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -18,14 +18,14 @@ const Main = () => {
         setActiveButton(buttonType);
     };
 
-    const screen = (activeButton === ButtonType.COMBINE)
+    const screen = (activeButton === ScreenType.COMBINE)
         ? <Combine setOpenSnackbar={setOpenSnackbar} setSnackbarMessage={setSnackbarMessage}/>
         : <Preview setOpenSnackbar={setOpenSnackbar} setSnackbarMessage={setSnackbarMessage}/>
 
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
-            <PageHeader
+            <Header
                 activeButton={activeButton}
                 onButtonClick={onButtonClick}
             />

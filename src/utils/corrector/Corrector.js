@@ -8,7 +8,7 @@ import {
     STYLE_REGEX,
     SVG_REGEX,
     UTF_REGEX,
-} from "../Constants";
+} from "../Regex";
 import {addCss} from "./Css";
 
 const removeComments = (content) => {

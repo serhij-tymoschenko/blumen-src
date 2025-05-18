@@ -17,6 +17,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [items, setItems] = useState(new Array(10).fill(""));
     const [showcase, setShowcase] = useState(null);
     const [hex, setHex] = useState("");
+    const [snooItems, setSnooItems] = useState(new Array(10).fill(""));
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
