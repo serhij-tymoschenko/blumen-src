@@ -5,6 +5,7 @@ import Combine from "./screens/combine/Combine";
 import Preview from "./screens/preview/Preview";
 import {Alert, Box, Snackbar} from "@mui/material";
 import Header from "./screens/components/Header";
+import Bottom from "./screens/components/Bottom";
 
 function App() {
     const [activeButton, setActiveButton] = useState(ScreenType.PREVIEW);
@@ -31,6 +32,7 @@ function App() {
                 onButtonClick={onButtonClick}
             />
             {screen}
+            <Bottom/>
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={3000}

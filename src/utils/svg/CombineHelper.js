@@ -61,7 +61,7 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
     const defs = `
         <defs>
             <clipPath id="clipRect">
-                <rect width="552" height="736" rx="55.2" ry="73.6" />
+                <rect width="552" height="736" rx="27.6" ry="36.8" />
             </clipPath>
             <style>
                 ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')}
@@ -107,7 +107,7 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
     const defs = `
         <defs>
         <clipPath id="clipRect">
-        <rect width="552" height="736" rx="55.2" ry="73.6" />
+        <rect width="552" height="736" rx="27.6" ry="36.8" />
         </clipPath>
             <style>
                 ${Array.from(combinedStyles).join("\n")}
