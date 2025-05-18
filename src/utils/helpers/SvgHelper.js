@@ -32,65 +32,61 @@ export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
         return item;
     });
 
-export const toPngSrc = (svgString) => {
-    return new Promise((resolve, reject) => {
-        if (!svgString) return reject("SVG string is empty");
+export const toPngSrc = async (svgString) => {
+    const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
 
-        const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-        const url = URL.createObjectURL(svgBlob);
+    const img = new Image();
 
-        const img = new Image();
-        img.onload = () => {
-            const width = img.width;
-            const height = img.height;
+    const imgLoaded = () =>
+        new Promise((resolve) => {
+            img.onload = () => resolve();
+        });
 
-            const canvas = document.createElement("canvas");
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, width, height);
-            ctx.drawImage(img, 0, 0);
+    img.src = url;
+    await imgLoaded();
 
-            const imageData = ctx.getImageData(0, 0, width, height);
-            const data = imageData.data;
+    const width = img.width;
+    const height = img.height;
 
-            function isRowTransparent(y) {
-                for (let x = 0; x < width; x++) {
-                    if (data[(y * width + x) * 4 + 3] !== 0) return false;
-                }
-                return true;
-            }
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(img, 0, 0);
 
-            let topVisibleRow = 0;
-            for (; topVisibleRow < height; topVisibleRow++) {
-                if (!isRowTransparent(topVisibleRow)) break;
-            }
+    const imageData = ctx.getImageData(0, 0, width, height);
+    const data = imageData.data;
 
-            const cropWidth = 404;
-            const cropHeight = 404;
-            const cropX = Math.max(0, Math.floor((width - cropWidth) / 2));
-            let cropY = topVisibleRow;
-            if (cropY + cropHeight > height) {
-                cropY = Math.max(0, height - cropHeight);
-            }
+    function isRowTransparent(y) {
+        for (let x = 0; x < width; x++) {
+            if (data[(y * width + x) * 4 + 3] !== 0) return false;
+        }
+        return true;
+    }
 
-            const croppedCanvas = document.createElement("canvas");
-            croppedCanvas.width = cropWidth;
-            croppedCanvas.height = cropHeight;
-            const croppedCtx = croppedCanvas.getContext("2d");
-            croppedCtx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    let topVisibleRow = 0;
+    for (; topVisibleRow < height; topVisibleRow++) {
+        if (!isRowTransparent(topVisibleRow)) break;
+    }
 
-            const base64Png = croppedCanvas.toDataURL("image/png");
+    const cropWidth = 404;
+    const cropHeight = 404;
+    const cropX = Math.max(0, Math.floor((width - cropWidth) / 2));
+    let cropY = topVisibleRow;
+    if (cropY + cropHeight > height) {
+        cropY = Math.max(0, height - cropHeight);
+    }
 
-            URL.revokeObjectURL(url);
-            resolve(base64Png);
-        };
+    const croppedCanvas = document.createElement("canvas");
+    croppedCanvas.width = cropWidth;
+    croppedCanvas.height = cropHeight;
+    const croppedCtx = croppedCanvas.getContext("2d");
+    croppedCtx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
-        img.onerror = (err) => {
-            URL.revokeObjectURL(url);
-            reject("Image load error: " + err);
-        };
+    const base64Png = croppedCanvas.toDataURL("image/png");
 
-        img.src = url;
-    });
+    URL.revokeObjectURL(url);
+    return base64Png;
 };

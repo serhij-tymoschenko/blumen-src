@@ -1,38 +1,29 @@
 import {TraitPreview} from "../../components/TraitPreview";
-import {replaceColors, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {combineTogether} from "../../../utils/combiner/Combiner";
+import {toSvgFile} from "../../../utils/helpers/SvgHelper";
 import {Stack, Typography} from "@mui/material";
 import React from "react";
 import {names} from "../../../utils/Constants";
-import {snooSrc} from "../../../utils/SvgSrc";
 
-const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
-    let localItems = replaceColors(items, bodyColor, hairColor, eyesColor)
-
+const ImageGrid = ({items, setItems, snooItems}) => {
     const handleDragStart = (index) => (event) => {
         event.dataTransfer.setData('text/plain', index);
 
-        // Get the original draggable element
         const draggedElement = event.currentTarget;
 
-        // Clone the element to use as drag image
         const dragImage = draggedElement.cloneNode(true);
         dragImage.style.position = 'absolute';
-        dragImage.style.top = '-9999px'; // Move it off-screen
+        dragImage.style.top = '-9999px';
         dragImage.style.left = '-9999px';
         dragImage.style.pointerEvents = 'none';
 
         document.body.appendChild(dragImage);
 
-        // Set it as the drag image
         event.dataTransfer.setDragImage(dragImage, dragImage.clientWidth / 2, dragImage.clientHeight / 2);
 
-        // Optional cleanup after drag ends
         event.target.addEventListener('dragend', () => {
             document.body.removeChild(dragImage);
         }, {once: true});
     };
-
 
     const handleDrop = (index) => (event) => {
         const draggedIndex = parseInt(event.dataTransfer.getData('text/plain'), 10);
@@ -44,16 +35,8 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
     };
 
     const handleDragOver = (event) => {
-        event.preventDefault(); // Necessary to allow drop
+        event.preventDefault();
     };
-
-    const getTop = (item, index) => {
-        return (index !== 9 && index !== 6) ? item : snooSrc
-    }
-
-    const getBottom = (item, index) => {
-        return (index !== 9 && index !== 6) ? snooSrc : item
-    }
 
     return (
         <div
@@ -65,18 +48,19 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                 justifyItems: 'center',
             }}
         >
-            {localItems.map((item, index) => (
+            {snooItems.map((snooItem, i) => (
+
                 <Stack spacing={0} direction="column">
                     <Typography width={138 + 4} variant="caption" align="center">
-                        {names[index]}
+                        {names[i]}
                     </Typography>
                     {
-                        index !== 9 ?
+                        i !== 9 ?
                             <div
-                                key={index}
+                                key={i}
                                 draggable
-                                onDragStart={handleDragStart(index)}
-                                onDrop={handleDrop(index)}
+                                onDragStart={handleDragStart(i)}
+                                onDrop={handleDrop(i)}
                                 onDragOver={handleDragOver}
                                 style={{
                                     position: 'relative',
@@ -96,7 +80,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                                     traitHeight={150}
                                     traitWidth={95}
                                     borderRadius={5}
-                                    item={toSvgFile(combineTogether([getBottom(item, index), getTop(item, index)], 552, 736))}
+                                    item={toSvgFile(snooItem)}
                                 />
                             </div>
                             :
@@ -106,7 +90,7 @@ const ImageGrid = ({items, setItems, bodyColor, hairColor, eyesColor}) => {
                                 traitWidth={138}
                                 traitHeight={184}
                                 borderRadius={5}
-                                item={toSvgFile(combineTogether([getBottom(item, index), getTop(item, index)], 552, 736, 0))}
+                                item={toSvgFile(snooItem)}
                             />
                     }
                 </Stack>

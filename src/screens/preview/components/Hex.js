@@ -1,12 +1,6 @@
-import {toPngSrc, toSvgFile} from "../../../utils/helpers/SvgHelper";
-import {getHexSrc} from "../../../utils/SvgSrc";
+import {toSvgFile} from "../../../utils/helpers/SvgHelper";
 
-const Hex = ({traitSvg, hex, setHex}) => {
-    toPngSrc(traitSvg)
-        .then((base64Png) => {
-            setHex(getHexSrc(base64Png));
-        })
-
+const Hex = ({hex}) => {
     return (
         <div style={{position: "relative", width: 120, height: 128.4}}>
             <img

@@ -1,11 +1,12 @@
 import PreviewGrid from "./components/PreviewGrid";
 import {Box, Paper, Stack, Typography} from "@mui/material";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
 import Centered from "../../stacks/Centered";
 import ZipDownload from "./components/ZipDownload";
+import {getShowcaseAndHex, getSnooItems} from "../../utils/SnooUtils";
 
 ;
 
@@ -14,10 +15,22 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [hairColors, setHairColors] = useState('#0000FF')
     const [eyesColors, setEyesColors] = useState('#FFFF00')
 
-    const [items, setItems] = useState(new Array(10).fill(""));
+    const [items, setItems] = useState(new Array(10).fill("<div></div>"));
+
+    const [snooItems, setSnooItems] = useState([]);
     const [showcase, setShowcase] = useState(null);
     const [hex, setHex] = useState("");
-    const [snooItems, setSnooItems] = useState(new Array(10).fill(""));
+
+    useEffect(() => {
+        const getItems = async (items, bodyColors, hairColors, eyesColors) => {
+            const [showcase, hex] = await getShowcaseAndHex(items, bodyColors, hairColors, eyesColors)
+            setShowcase(showcase)
+            setHex(hex)
+        }
+
+        getItems(items, bodyColors, hairColors, eyesColors)
+        setSnooItems(getSnooItems(items, bodyColors, hairColors, eyesColors))
+    }, [bodyColors, eyesColors, hairColors, items]);
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
@@ -121,21 +134,14 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                 >
                     <Box sx={{alignSelf: 'flex-end'}}>
                         <Showcase
-                            items={items}
-                            eyesColor={eyesColors}
-                            bodyColor={bodyColors}
-                            hairColor={hairColors}
+                            showcase={showcase}
                             hex={hex}
-                            setHex={setHex}
-                            setShowcase={setShowcase}
                         />
                     </Box>
                     <PreviewGrid
                         items={items}
                         setItems={setItems}
-                        bodyColor={bodyColors}
-                        hairColor={hairColors}
-                        eyesColor={eyesColors}
+                        snooItems={snooItems}
                         sx={{alignSelf: 'flex-end'}}
                     />
                     <Box
@@ -160,7 +166,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                                 eyesColor={eyesColors}
                                 setEyesColor={setEyesColors}
                             />
-                            <ZipDownload items={items} hex={hex} showcase={showcase}/>
+                            <ZipDownload snooItems={snooItems} hex={hex} showcase={showcase}/>
                         </Stack>
                     </Box>
                 </Stack>

@@ -58,7 +58,7 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
         <rect width="552" height="736" rx="10%" ry="10%" />
     </clipPath>
             <style>
-                ${Array.from(combinedStyles).join("\n")}
+                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')}
             </style>
         </defs>
     `;
@@ -147,7 +147,7 @@ export const combineVertically = (items, requiredWidth, requiredHeight) => {
         const defs = `
         <defs>
             <style>
-                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')};.
+                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')};
             </style>
         </defs>
     `;
