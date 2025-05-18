@@ -1,6 +1,6 @@
 const extractSvgStyles = (svg) => {
-    const styles = svg.match(/<style[^>]*>[\s\S]*?<\/style>/gi);
-    return styles ? styles.join("\n") : "";
+    const styles = svg.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+    return styles ? styles[1] : "";
 };
 
 const extractSvgContent = (svg) => {
@@ -99,7 +99,6 @@ export const combineHorizontally = (items, requiredWidth, requiredHeight) => {
                 ${content}
             </g>
         `;
-
         }
 
         const defs = `
@@ -108,7 +107,7 @@ export const combineHorizontally = (items, requiredWidth, requiredHeight) => {
         <rect width="552" height="736" rx="2%" ry="10%" />
     </clipPath>
             <style>
-                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')};.
+                ${Array.from(combinedStyles).join("\n")}
             </style>
         </defs>
     `;
@@ -147,7 +146,7 @@ export const combineVertically = (items, requiredWidth, requiredHeight) => {
         const defs = `
         <defs>
             <style>
-                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')};
+                ${Array.from(combinedStyles).join("\n")}
             </style>
         </defs>
     `;

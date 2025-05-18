@@ -8,8 +8,6 @@ import Centered from "../../stacks/Centered";
 import ZipDownload from "./components/ZipDownload";
 import {getShowcaseAndHex, getSnooItems} from "../../utils/SnooUtils";
 
-;
-
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
     const [hairColors, setHairColors] = useState('#0000FF')
