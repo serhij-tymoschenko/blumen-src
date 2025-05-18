@@ -2,7 +2,7 @@ import React from "react";
 import {TraitPreview} from "../../components/TraitPreview";
 import Hex from "./Hex";
 import {Stack} from "@mui/material";
-import {toSvgFile} from "../../../utils/helpers/SvgHelper";
+import {toSvgFile} from "../../../utils/svg/SvgHelper";
 
 const Showcase = ({showcase, hex}) => {
     return (

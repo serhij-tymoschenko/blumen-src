@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
-import correct from "../../utils/corrector/Corrector";
-import {combineTogether, insertPngIntoSvg} from "../../utils/combiner/Combiner";
+import correct from "../../utils/svg/corrector/Corrector";
+import {combineTogether, insertPngIntoSvg} from "../../utils/svg/CombineHelper";
 import {TraitPreview} from "../components/TraitPreview";
-import Centered from "../../stacks/Centered";
-import {toSvgFile} from "../../utils/helpers/SvgHelper";
+import {toSvgFile} from "../../utils/svg/SvgHelper";
 import {Stack} from "@mui/material";
 
 const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
@@ -91,7 +90,14 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     };
 
     return (
-        <Centered>
+        <Box
+            sx={{
+                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
             <Stack spacing={2} direction="row">
                 <Stack spacing={2} alignSelf={'center'}
                 >
@@ -109,7 +115,7 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                 </Stack>
                 <TraitPreview key={svg} item={toSvgFile(svg)} width={285} height={450}/>
             </Stack>
-        </Centered>
+        </Box>
     );
 };
 

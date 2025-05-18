@@ -8,21 +8,18 @@ export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
         if (typeof item === 'string') {
             let modifiedSrc = item;
 
-            // Replace body colors (green/lime)
             if (bodyColor) {
                 modifiedSrc = modifiedSrc
                     .replace(/#00[Ff][Ff]00/g, bodyColor)
                     .replace(/lime/g, bodyColor);
             }
 
-            // Replace eye colors (yellow)
             if (eyesColor) {
                 modifiedSrc = modifiedSrc
                     .replace(/#[Ff][Ff][Ff][Ff]00/g, eyesColor)
                     .replace(/#ff0/g, eyesColor);
             }
 
-            // Replace hair color (blue)
             if (hairColor) {
                 modifiedSrc = modifiedSrc.replace(/blue/g, hairColor);
             }

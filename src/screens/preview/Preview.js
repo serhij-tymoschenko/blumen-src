@@ -4,9 +4,8 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
-import Centered from "../../stacks/Centered";
 import ZipDownload from "./components/ZipDownload";
-import {getShowcaseAndHex, getSnooItems} from "../../utils/SnooUtils";
+import {getShowcaseAndHex, getSnooItems} from "../../utils/svg/SnooHelper";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -103,7 +102,14 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
         onDrop, accept: {'image/*': []}, multiple: true,
     });
 
-    return (<Centered>
+    return (<Box
+            sx={{
+                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
             <Stack direction="column" spacing={2} sx={{justifyContent: 'center', alignItems: 'center'}}>
                 <Paper
                     {...getRootProps()}
@@ -169,7 +175,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                     </Box>
                 </Stack>
             </Stack>
-        </Centered>
+        </Box>
     )
 }
 

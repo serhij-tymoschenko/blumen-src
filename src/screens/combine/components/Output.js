@@ -1,6 +1,6 @@
 import {Button, Stack, Typography} from "@mui/material";
 import React from "react";
-import {formatSize, getSvgSize} from "../../../utils/size/SizeHelper";
+import {formatSize, getSvgSize} from "../../../utils/svg/SizeHelper";
 
 const output = ({svg, svgSrc, pngSrc, onDownload}) => {
     const svgSize = getSvgSize(svg)

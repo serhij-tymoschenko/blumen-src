@@ -1,14 +1,16 @@
 import {
     COMMENT_REGEX,
     DEFS_REGEX,
-    DOCTYPE_REGEX, EMPTY_LINE_REGEX,
+    DOCTYPE_REGEX,
+    EMPTY_LINE_REGEX,
     INK_GROUP_REGEX,
     INK_LABEL_REGEX,
     SODI_REGEX,
     STYLE_REGEX,
     SVG_REGEX,
     UTF_REGEX,
-} from "../Regex";
+} from "../../Constants";
+
 import {addCss} from "./Css";
 
 const removeComments = (content) => {
