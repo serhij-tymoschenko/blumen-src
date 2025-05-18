@@ -82,11 +82,10 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
             insertPngIntoSvg(svgSrc, pngSrc)
             : svgSrc
 
-        const blob = new Blob([output], {type: 'text/plain'});
-        const url = URL.createObjectURL(blob);
+        const svg = toSvgFile(output);
 
         const a = document.createElement('a');
-        a.href = url;
+        a.href = svg;
         a.download = pngSrc ? `combined-${svgName}` : `corrected-${svgName}`;
         a.click();
     };
