@@ -1,10 +1,6 @@
-export const toSvgFile = (item)=> {
-    if (typeof item === 'string' && item.startsWith('<svg')) {
-        const blob = new Blob([item], {type: 'image/svg+xml'});
-        return URL.createObjectURL(blob);
-    } else {
-        return item;
-    }
+export const toSvgFile = (item) => {
+    const blob = new Blob([item], {type: 'image/svg+xml'});
+    return URL.createObjectURL(blob);
 }
 
 export const replaceColors = (items, bodyColor, hairColor, eyesColor) =>
@@ -40,7 +36,7 @@ export const toPngSrc = (svgString) => {
     return new Promise((resolve, reject) => {
         if (!svgString) return reject("SVG string is empty");
 
-        const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+        const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
         const url = URL.createObjectURL(svgBlob);
 
         const img = new Image();

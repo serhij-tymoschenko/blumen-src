@@ -16,7 +16,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     const [items, setItems] = useState(new Array(10).fill(""));
     const [showcase, setShowcase] = useState(null);
-    const [hexUrl, setHexUrl] = useState("");
+    const [hex, setHex] = useState("");
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
@@ -124,7 +124,8 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                             eyesColor={eyesColors}
                             bodyColor={bodyColors}
                             hairColor={hairColors}
-                            setHexUrl={setHexUrl}
+                            hex={hex}
+                            setHex={setHex}
                             setShowcase={setShowcase}
                         />
                     </Box>
@@ -158,7 +159,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                                 eyesColor={eyesColors}
                                 setEyesColor={setEyesColors}
                             />
-                            <ZipDownload items={items} hexUrl={hexUrl} showcase={showcase}/>
+                            <ZipDownload items={items} hex={hex} showcase={showcase}/>
                         </Stack>
                     </Box>
                 </Stack>

@@ -13,7 +13,7 @@ const addFromUrl = async (zip, url, filename) => {
 }
 
 
-const ZipDownload = ({items, showcase, hexUrl}) => {
+const ZipDownload = ({items, showcase, hex}) => {
     const snooItem = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 600">
     <path d="M244.5 500.5c3.5-8 4-9.5 6-19 1.614-7.664 1-16.5 1-16.5l-49.252 24.18-6.748 29.32c-.665 3.077-.748 11.5 2.5 17.5s12.782 16.357 25.5 17.5c26.932 2.42 25-20 12.5-35 1.156-2.285 5-10 8.5-18ZM246.5 448c7.75 15.5 17.479 21.542 23 19.5 19.5-7.212 13.279-40.03 7-56-5.847-14.87-17-33.5-27-44s-23.865-2.671-22.5 13.5c1.365 16.171 11.75 51.5 19.5 67Z"
           fill="rgba(246,248,249,0.8)" stroke="#A0B0B5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
@@ -64,7 +64,7 @@ const ZipDownload = ({items, showcase, hexUrl}) => {
         const firstRowSvg = combineHorizontally(localItems.slice(0, 5), 552, 736);
         const secondRowSvg = combineHorizontally(localItems.slice(5), 552, 736);
 
-        await addFromUrl(zip, hexUrl, "Hex.png")
+        await addFromUrl(zip, toSvgFile(hex), "Hex.svg")
         await addFromUrl(zip, toSvgFile(showcase), "Showcase.svg")
         await addFromUrl(zip, toSvgFile(firstRowSvg), "First row.svg")
         await addFromUrl(zip, toSvgFile(secondRowSvg), "Second row.svg")
