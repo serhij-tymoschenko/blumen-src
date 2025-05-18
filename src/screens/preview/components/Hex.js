@@ -59,11 +59,12 @@ const Hex = ({traitSvg, setHexUrl}) => {
 
 
     return (
-        <div style={{position: "relative", width: 120, height: 124.5}}>
-            <TraitPreview
-                item={toSvgFile(svgSrc)}
-            width={120}
-            height={124.5}/>
+        <div style={{position: "relative", width: 120, height: 128.4}}>
+            <img
+                width={120}
+                height={128.4}
+                src={toSvgFile(svgSrc)}
+            />
         </div>
     );
 };
