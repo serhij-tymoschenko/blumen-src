@@ -3,6 +3,11 @@ const extractSvgStyles = (svg) => {
     return styles ? styles[1] : "";
 };
 
+const extractDefs = (svg) => {
+    const defs = svg.match(/<defs[^>]*>([\s\S]*?)<\/defs>/i);
+    return defs ? defs[1].replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "") : "";
+};
+
 const extractSvgContent = (svg) => {
     const content = svg.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
     return content ? content[1].replace(/<defs[^>]*>[\s\S]*?<\/defs>/gi, "") : "";
@@ -17,6 +22,7 @@ export const insertPngIntoSvg = (svg, png) => {
 export const combineTogether = (items, requiredWidth, requiredHeight, backgroundIndex = null) => {
     let combinedContent = "";
     let combinedStyles = new Set();
+    let combinedDefs = new Set();
 
     if (!items || !Array.isArray(items)) return "";
 
@@ -26,6 +32,8 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
         if (typeof item === "string" && item.startsWith("<svg")) {
             const svg = item.replace(/cls-/g, `item-${itemIndex}-cls-`);
             const styles = extractSvgStyles(svg);
+            const defs = extractDefs(svg);
+            if (defs) combinedDefs.add(defs);
             if (styles) combinedStyles.add(styles);
 
             const content = extractSvgContent(svg);
@@ -60,6 +68,7 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
 
     const defs = `
         <defs>
+            ${Array.from(combinedDefs).join("\n")}
             <clipPath id="clipRect">
                 <rect width="552" height="736" rx="27.6" ry="36.8" />
             </clipPath>
@@ -78,11 +87,13 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
 export const combineGrid = (items, requiredWidth, requiredHeight) => {
     let combinedContent = "";
     let combinedStyles = new Set();
+    let combinedDefs = new Set();
 
     if (!items || !Array.isArray(items)) return "";
 
+    const rowsCount = Math.floor(items.length / 5);
+
     const localItems = items.length > 5 ? [items.slice(0, 5), items.slice(5)] : [items.slice(0, 5)]
-    const rows = items.length > 5 ? 2 : 1
 
     for (let i = 0; i < localItems.length; i++) {
         const offsetY = i * requiredHeight;
@@ -91,6 +102,8 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
 
             const svg = item.replace(/cls-/g, `item-${j}-cls-`);
             const styles = extractSvgStyles(svg);
+            const defs = extractDefs(svg);
+            if (defs) combinedDefs.add(defs);
             if (styles) combinedStyles.add(styles);
 
             const content = extractSvgContent(svg);
@@ -106,16 +119,14 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
 
     const defs = `
         <defs>
-        <clipPath id="clipRect">
-        <rect width="552" height="736" rx="27.6" ry="36.8" />
-        </clipPath>
+            ${Array.from(combinedDefs).join("\n")}
             <style>
                 ${Array.from(combinedStyles).join("\n")}
             </style>
         </defs>
     `;
 
-    return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth * 5}" height="${requiredHeight * rows}" viewBox="0 0 ${requiredWidth * 5} ${requiredHeight * rows}">
+    return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth * 5}" height="${requiredHeight * rowsCount}" viewBox="0 0 ${requiredWidth * 5} ${requiredHeight * rowsCount}">
             ${defs}
             ${combinedContent}
         </svg>`;
