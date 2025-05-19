@@ -100,7 +100,7 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
         for (let j = 0; j < localItems[i].length; j++) {
             const item = localItems[i][j];
 
-            const svg = item.replace(/cls-/g, `item-${j}-cls-`);
+            const svg = item.replace(/cls-/g, `item-${i}${j}-cls-`);
             const styles = extractSvgStyles(svg);
             const defs = extractDefs(svg);
             if (defs) combinedDefs.add(defs);
