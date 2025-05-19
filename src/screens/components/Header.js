@@ -11,7 +11,7 @@ const Header = ({activeButton, onButtonClick}) => {
             justifyContent="center"
             width={'100vw'}
         >
-            <Typography variant="caption">
+            <Typography variant="h5">
                 Combine
             </Typography>
             <FormControlLabel
@@ -29,7 +29,7 @@ const Header = ({activeButton, onButtonClick}) => {
                     />
                 }
             />
-            <Typography variant="caption">
+            <Typography variant="h5">
                 Preview
             </Typography>
         </Stack>
