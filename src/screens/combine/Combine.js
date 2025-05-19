@@ -11,16 +11,20 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [svgSrc, setSvgSrc] = useState(null);
     const [svgName, setSvgName] = useState(null);
     const [pngSrc, setPngSrc] = useState(null);
-    const [svg, setSvg] = useState("<svg></svg>");
+    const [svg, setSvg] = useState(null);
 
     const REQUIRED_RATIO = 380 / 600;
     const hasExactRatio = (width, height) => {
         return (width / height) === REQUIRED_RATIO;
     };
 
+    const onPngReset = () => {
+        setPngSrc(null);
+    }
+
     useEffect(() => {
         if (!svgSrc) {
-            setSvg(null);
+            setSvg(`<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" viewBox="0 0 1 1"></svg>`);
             return;
         }
         const result = pngSrc
@@ -104,7 +108,8 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                     <Actions
                         onSvgChange={onSvgChange}
                         onPngChange={onPngChange}
-                        onDownload={onDownload}
+                        pngSrc={pngSrc}
+                        onPngReset={onPngReset}
                     />
                     <Output
                         svg={svg}
