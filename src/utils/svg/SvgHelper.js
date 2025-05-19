@@ -68,9 +68,8 @@ export const toPngSrc = async (svgString) => {
         if (!isRowTransparent(topVisibleRow)) break;
     }
 
-
-    const cropWidth = (topVisibleRow < 175.4) ? 404 : 325.2;
-    const cropHeight = (topVisibleRow < 175.4) ? 404 : 325.2;
+    const cropWidth = (-1.0975 * topVisibleRow + 600);
+    const cropHeight = (-1.0975 * topVisibleRow + 600);
     const cropX = Math.max(0, Math.floor((width - cropWidth) / 2));
     let cropY = topVisibleRow;
     if (cropY + cropHeight > height) {
