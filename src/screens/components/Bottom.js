@@ -12,7 +12,6 @@ const Bottom = () => {
             width={'100vw'}
         >
             <Link href="https://buymeacoffee.com/tymoschenko" target="_blank" rel="noopener">
-                {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <img src={bmc} width={182} height={51}/>
             </Link>
         </Stack>
