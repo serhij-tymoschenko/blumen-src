@@ -30,9 +30,11 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
         const result = pngSrc
             ? combineTogether([svgSrc, pngSrc], 380, 600)
             : combineTogether([svgSrc], 380, 600);
+        console.log(result);
 
         setSvg(result);
-    }, [svgSrc, pngSrc]);
+
+    }, [svgSrc, pngSrc, svg]);
 
     const onSvgChange = (event) => {
         const file = event.target.files[0];
@@ -82,8 +84,8 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
 
     const onDownload = () => {
         const output = (pngSrc) ?
-            insertPngIntoSvg(svgSrc, pngSrc)
-            : svgSrc
+            insertPngIntoSvg(correct(svgSrc), pngSrc)
+            : correct(svgSrc)
 
         const svg = toSvgFile(output);
 
@@ -118,7 +120,7 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
                         onDownload={onDownload}
                     />
                 </Stack>
-                <TraitPreview key={svg} item={toSvgFile(svg)} width={285} height={450}/>
+                <TraitPreview item={toSvgFile(svg)} width={285} height={450}/>
             </Stack>
         </Box>
     );

@@ -1,17 +1,22 @@
+import correct from "./corrector/Corrector";
+
 const extractSvgStyles = (svg) => {
-    const styles = svg.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
-    return styles ? styles[1] : "";
+    const match = svg.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+    return match ? match[1].trim() : "";
 };
 
 const extractDefs = (svg) => {
-    const defs = svg.match(/<defs[^>]*>([\s\S]*?)<\/defs>/i);
-    return defs ? defs[1].replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "") : "";
+    const match = svg.match(/<defs[^>]*>([\s\S]*?)<\/defs>/i);
+    if (!match) return "";
+    const defsContent = match[1];
+    return defsContent.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "").trim();
 };
 
 const extractSvgContent = (svg) => {
-    const content = svg.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
-    return content ? content[1].replace(/<defs[^>]*>[\s\S]*?<\/defs>/gi, "") : "";
+    const match = svg.match(/<svg[^>]*?>([\s\S]*?)<\/svg>/i);
+    return match ? match[1].replace(/<defs[^>]*>[\s\S]*?<\/defs>/gi, "").trim() : "";
 };
+
 
 export const insertPngIntoSvg = (svg, png) => {
     const insertIndex = svg.lastIndexOf('</svg>');
@@ -21,22 +26,24 @@ export const insertPngIntoSvg = (svg, png) => {
 
 export const combineTogether = (items, requiredWidth, requiredHeight, backgroundIndex = null) => {
     let combinedContent = "";
-    let combinedStyles = new Set();
-    let combinedDefs = new Set();
+    let combinedStyles = [];
+    let combinedDefs = [];
 
     if (!items || !Array.isArray(items)) return "";
 
     for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-        const item = items[itemIndex];
+        let item = items[itemIndex].replace(/<\?xml[\s\S]*?\?>/, "").trim();
 
-        if (typeof item === "string" && item.startsWith("<svg")) {
+        if (item.trim().startsWith("<svg")) {
             const svg = item.replace(/cls-/g, `item-${itemIndex}-cls-`);
+
             const styles = extractSvgStyles(svg);
             const defs = extractDefs(svg);
-            if (defs) combinedDefs.add(defs);
-            if (styles) combinedStyles.add(styles);
+            combinedDefs.push(defs);
+            combinedStyles.push(styles);
 
             const content = extractSvgContent(svg);
+
             const [offsetX, offsetY] = (itemIndex === backgroundIndex)
                 ? [0, 0]
                 : [(requiredWidth - 380) / 2, (requiredHeight - 600) / 2];
@@ -66,28 +73,32 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
         }
     }
 
-    const defs = `
-        <defs>
-            ${Array.from(combinedDefs).join("\n")}
+    const defs = `<defs>
+            ${combinedDefs.join("\n")}
             <clipPath id="clipRect">
                 <rect width="552" height="736" rx="27.6" ry="36.8" />
             </clipPath>
             <style>
-                ${Array.from(combinedStyles).join("\n").replace(/<\/?style>/g, '')}
+                ${combinedStyles.join("\n").replace(/<\/?style>/g, '')}
             </style>
         </defs>
     `;
 
+    console.log(`<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
+            ${defs}
+            <g clip-path="url(#clipRect)">${combinedContent}</g>
+        </svg>`)
+
     return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
             ${defs}
             <g clip-path="url(#clipRect)">${combinedContent}</g>
-        </svg>`;
+        </svg>`
 };
 
 export const combineGrid = (items, requiredWidth, requiredHeight) => {
     let combinedContent = "";
-    let combinedStyles = new Set();
-    let combinedDefs = new Set();
+    let combinedStyles = [];
+    let combinedDefs = [];
 
     if (!items || !Array.isArray(items)) return "";
 
@@ -103,8 +114,8 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
             const svg = item.replace(/cls-/g, `item-${i}${j}-cls-`);
             const styles = extractSvgStyles(svg);
             const defs = extractDefs(svg);
-            if (defs) combinedDefs.add(defs);
-            if (styles) combinedStyles.add(styles);
+            if (defs) combinedDefs.push(defs);
+            if (styles) combinedStyles.push(styles);
 
             const content = extractSvgContent(svg);
             const offsetX = (j) * requiredWidth
@@ -119,9 +130,9 @@ export const combineGrid = (items, requiredWidth, requiredHeight) => {
 
     const defs = `
         <defs>
-            ${Array.from(combinedDefs).join("\n")}
+            ${combinedDefs.join("\n")}
             <style>
-                ${Array.from(combinedStyles).join("\n")}
+                ${combinedStyles.join("\n")}
             </style>
         </defs>
     `;

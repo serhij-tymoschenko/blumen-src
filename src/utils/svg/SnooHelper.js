@@ -78,6 +78,5 @@ export const getShowcaseAndHex = async (items, bodyColor, hairColor, eyesColor) 
     const combinedTraits = combineTogether(localItems.slice(1), 552, 736)
 
     const hex = getHexSrc(await toPngSrc(combinedTraits))
-    console.log(showcase)
     return [showcase, hex]
 }

@@ -6,6 +6,7 @@ import Showcase from "./components/Showcase";
 import ColorSection from "./components/ColorSection";
 import ZipDownload from "./components/ZipDownload";
 import {getShowcaseAndHex, getSnooItems} from "../../utils/svg/SnooHelper";
+import correct from "../../utils/svg/corrector/Corrector";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColors, setBodyColors] = useState('#00FF00')
@@ -35,7 +36,7 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
 
         const localSrc = await new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
+            reader.onloadend = () => (isSvg) ? resolve(correct(reader.result)) : resolve(reader.result)
             reader.onerror = reject;
 
             if (isSvg) {
