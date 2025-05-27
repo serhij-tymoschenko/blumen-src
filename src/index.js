@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 if (window.location.href.includes("#")) {
     const startIndex = window.location.href.indexOf('#') + 2;
-    window.location = `reddit://${window.location.href.substring(startIndex)}`
+    window.location.replace(`reddit://${window.location.href.substring(startIndex)}`)
+    var win = window.open("","_self");
+    win.close();
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
