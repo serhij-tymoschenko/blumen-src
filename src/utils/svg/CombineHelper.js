@@ -84,11 +84,6 @@ export const combineTogether = (items, requiredWidth, requiredHeight, background
         </defs>
     `;
 
-    console.log(`<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
-            ${defs}
-            <g clip-path="url(#clipRect)">${combinedContent}</g>
-        </svg>`)
-
     return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" width="${requiredWidth}" height="${requiredHeight}" viewBox="0 0 ${requiredWidth} ${requiredHeight}">
             ${defs}
             <g clip-path="url(#clipRect)">${combinedContent}</g>

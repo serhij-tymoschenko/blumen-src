@@ -7,6 +7,7 @@ import {Alert, Box, Snackbar} from "@mui/material";
 import Header from "./screens/components/Header";
 import Bottom from "./screens/components/Bottom";
 
+
 function App() {
     const [activeButton, setActiveButton] = useState(ScreenType.PREVIEW);
     const [openSnackbar, setOpenSnackbar] = useState(false);

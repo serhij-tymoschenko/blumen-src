@@ -30,7 +30,6 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
         const result = pngSrc
             ? combineTogether([svgSrc, pngSrc], 380, 600)
             : combineTogether([svgSrc], 380, 600);
-        console.log(result);
 
         setSvg(result);
 
