@@ -16,6 +16,7 @@ export const COMMENT_REGEX = /<!--[^-]+-->/g;
 export const DOCTYPE_REGEX = /<!DOCTYPE\s+svg(?:\s+(?:PUBLIC|SYSTEM)\s+"[^"]*"(?:\s+"[^"]*")?)?\s*>/i;
 export const SVG_REGEX = /<svg\b[^>]*?>/is;
 export const SODI_REGEX = /<sodipodi:namedview\b[^>]*?>[\s\S]*?<\/sodipodi:namedview>/i;
+export const SODI_2_REGEX = /<SODI[^>]*>/i
 export const STYLE_REGEX = /<style\b[^>]*>[\s\S]*?<\/style>/i;
 export const DEFS_REGEX = /<defs\b[^>]*\/>/i;
 export const STYLE_PARAM_REGEX = /style="([^"']+)"/g;

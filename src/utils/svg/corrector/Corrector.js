@@ -4,7 +4,7 @@ import {
     DOCTYPE_REGEX,
     EMPTY_LINE_REGEX,
     INK_GROUP_REGEX,
-    INK_LABEL_REGEX,
+    INK_LABEL_REGEX, SODI_2_REGEX,
     SODI_REGEX,
     STYLE_REGEX,
     SVG_REGEX,
@@ -30,7 +30,7 @@ const normalizeSvg = (content) => {
 }
 
 const removeSodi = (content) => {
-    return content.replace(SODI_REGEX, "")
+    return content.replace(SODI_REGEX, "").replace(SODI_2_REGEX, "")
 }
 
 const normalizeG = (content) => {
