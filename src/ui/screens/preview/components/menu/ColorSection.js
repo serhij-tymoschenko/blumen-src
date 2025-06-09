@@ -1,4 +1,4 @@
-import ColorPicker from "../../../components/ColorPicker";
+import ColorPicker from "../../../../components/ColorPicker";
 import {Button, Stack} from "@mui/material";
 import RefreshIcon from '@mui/icons-material/Refresh';
 import React from "react";

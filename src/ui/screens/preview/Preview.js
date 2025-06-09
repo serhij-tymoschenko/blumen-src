@@ -5,7 +5,7 @@ import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
 import {getShowcaseAndHex, getSnooItems} from "../../../utils/svg/SnooHelper";
 import correct from "../../../utils/svg/corrector/Corrector";
-import SideMenu from "./components/SideMenu";
+import SideMenu from "./components/menu/SideMenu";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [bodyColor, setBodyColor] = useState('#00FF00')
