@@ -1,4 +1,4 @@
-import {toSvgFile} from "../../../utils/svg/SvgHelper";
+import {toSvgFile} from "../../../../utils/svg/SvgHelper";
 
 const Hex = ({hex}) => {
     return (

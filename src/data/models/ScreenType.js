@@ -1,5 +1,5 @@
 const ScreenType = {
-    COMBINE: 0,
+    SVG_TOOL: 0,
     PREVIEW: 1
 }
 

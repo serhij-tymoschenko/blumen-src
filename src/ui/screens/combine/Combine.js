@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Actions from "./components/Actions";
 import Output from "./components/Output";
-import correct from "../../utils/svg/corrector/Corrector";
-import {combineTogether, insertPngIntoSvg} from "../../utils/svg/CombineHelper";
-import {TraitPreview} from "../components/TraitPreview";
-import {toSvgFile} from "../../utils/svg/SvgHelper";
+import correct from "../../../utils/svg/corrector/Corrector";
+import {combineTogether, insertPngIntoSvg} from "../../../utils/svg/CombineHelper";
+import {TraitPreview} from "../../components/TraitPreview";
+import {toSvgFile} from "../../../utils/svg/SvgHelper";
 import {Box, Stack} from "@mui/material";
 
 const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {

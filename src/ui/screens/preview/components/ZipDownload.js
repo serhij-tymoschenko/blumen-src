@@ -1,7 +1,7 @@
 import React from "react";
 import DownloadIcon from '@mui/icons-material/Download';
 import {Button} from "@mui/material";
-import {downloadZip} from "../../../utils/ZipHelper";
+import {downloadZip} from "../../../../utils/ZipHelper";
 
 const ZipDownload = ({snooItems, showcase, hex}) => {
     const onClick = async() => {

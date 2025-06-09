@@ -1,8 +1,8 @@
-import {TraitPreview} from "../../components/TraitPreview";
-import {toSvgFile} from "../../../utils/svg/SvgHelper";
+import {TraitPreview} from "../../../components/TraitPreview";
+import {toSvgFile} from "../../../../utils/svg/SvgHelper";
 import {Stack, Typography} from "@mui/material";
 import React from "react";
-import {names} from "../../../utils/Constants";
+import {names} from "../../../../utils/Constants";
 
 const ImageGrid = ({items, setItems, snooItems}) => {
     const handleDragStart = (index) => (event) => {
