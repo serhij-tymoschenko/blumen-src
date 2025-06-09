@@ -9,7 +9,7 @@ import {
     STYLE_REGEX,
     SVG_REGEX,
     UTF_REGEX,
-} from "../../Constants";
+} from "../../RegexConstants";
 
 import {addCss} from "./Css";
 
