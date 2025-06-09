@@ -1,8 +1,12 @@
 import {TraitPreview} from "../../../components/TraitPreview";
 import {toSvgFile} from "../../../../utils/svg/SvgHelper";
-import {Stack, Typography} from "@mui/material";
+import {Button, Stack, Typography} from "@mui/material";
 import React from "react";
 import {names} from "../../../../utils/Constants";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import DropMenu from "./drop_menu/DropMenu";
 
 const ImageGrid = ({items, setItems, snooItems}) => {
     const handleDragStart = (index) => (event) => {
@@ -49,11 +53,21 @@ const ImageGrid = ({items, setItems, snooItems}) => {
             }}
         >
             {snooItems.map((snooItem, i) => (
+                <Stack spacing={1} direction="column">
+                    <Stack
+                        width={138 + 4}
+                        direction="row"
+                        spacing={1}
+                        alignItems="center" // Ensures vertical centering of the children
+                        justifyContent="space-between" // Pushes children to the ends (text in center, menu at the end)
+                    >
+                        <Typography align="center">
+                            {names[i]}
+                        </Typography>
 
-                <Stack spacing={0} direction="column">
-                    <Typography width={138 + 4} variant="caption" align="center">
-                        {names[i]}
-                    </Typography>
+                        <DropMenu />
+                    </Stack>
+
                     {
                         i !== 9 ?
                             <div
