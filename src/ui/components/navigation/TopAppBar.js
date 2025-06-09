@@ -1,7 +1,7 @@
 import AppBar from '@mui/material/AppBar';
 import {Box, Button, Stack, Typography} from "@mui/material";
-import logo from "../../res/raw/logo.png";
-import ScreenType from "../../data/models/ScreenType";
+import logo from "../../../res/raw/logo.png";
+import ScreenType from "../../../data/models/ScreenType";
 
 const TopAppBar = ({onButtonClick}) => {
     return <>

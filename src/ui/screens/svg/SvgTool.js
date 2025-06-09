@@ -7,7 +7,7 @@ import {TraitPreview} from "../../components/TraitPreview";
 import {toSvgFile} from "../../../utils/svg/SvgHelper";
 import {Box, Stack} from "@mui/material";
 
-const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
+const SvgTool = ({setOpenSnackbar, setSnackbarMessage}) => {
     const [svgSrc, setSvgSrc] = useState(null);
     const [svgName, setSvgName] = useState(null);
     const [pngSrc, setPngSrc] = useState(null);
@@ -125,4 +125,4 @@ const Combine = ({setOpenSnackbar, setSnackbarMessage}) => {
     );
 };
 
-export default Combine;
+export default SvgTool;

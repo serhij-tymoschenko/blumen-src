@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Stack} from '@mui/material';
-import bmc from "../../res/raw/bmc-yellow-button.png";
+import bmc from "../../../res/raw/bmc-yellow-button.png";
 
 const BottomBar = () => {
     return (

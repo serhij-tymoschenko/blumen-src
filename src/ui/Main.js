@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import ScreenType from "../data/models/ScreenType";
-import Combine from "./screens/combine/Combine";
+import SvgTool from "./screens/svg/SvgTool";
 import Preview from "./screens/preview/Preview";
 import {Alert, Box, Snackbar} from "@mui/material";
-import BottomBar from "./components/BottomBar";
-import TopAppBar from "./components/TopAppBar";
+import BottomBar from "./components/navigation/BottomBar";
+import TopAppBar from "./components/navigation/TopAppBar";
 
 const Main = () => {
-    const [activeButton, setActiveButton] = useState(ScreenType.PREVIEW);
+    const [screenType, setScreenType] = useState(ScreenType.PREVIEW);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -16,11 +16,11 @@ const Main = () => {
     };
 
     const onButtonClick = (buttonType) => {
-        setActiveButton(buttonType);
+        setScreenType(buttonType);
     };
 
-    const screen = (activeButton === ScreenType.SVG_TOOL)
-        ? <Combine setOpenSnackbar={setOpenSnackbar} setSnackbarMessage={setSnackbarMessage}/>
+    const screen = (screenType === ScreenType.SVG_TOOL)
+        ? <SvgTool setOpenSnackbar={setOpenSnackbar} setSnackbarMessage={setSnackbarMessage}/>
         : <Preview setOpenSnackbar={setOpenSnackbar} setSnackbarMessage={setSnackbarMessage}/>
 
 
