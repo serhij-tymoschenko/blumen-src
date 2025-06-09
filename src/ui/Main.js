@@ -3,7 +3,7 @@ import ScreenType from "../data/models/ScreenType";
 import Combine from "./screens/combine/Combine";
 import Preview from "./screens/preview/Preview";
 import {Alert, Box, Snackbar} from "@mui/material";
-import Bottom from "./components/Bottom";
+import BottomBar from "./components/BottomBar";
 import TopAppBar from "./components/TopAppBar";
 
 const Main = () => {
@@ -30,7 +30,7 @@ const Main = () => {
                 onButtonClick={onButtonClick}
             />
             {screen}
-            <Bottom/>
+            <BottomBar/>
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={3000}
