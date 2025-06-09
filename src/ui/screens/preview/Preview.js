@@ -3,19 +3,18 @@ import {Box, Paper, Stack, Typography} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDropzone} from "react-dropzone";
 import Showcase from "./components/Showcase";
-import ColorSection from "./components/ColorSection";
-import ZipDownload from "./components/ZipDownload";
 import {getShowcaseAndHex, getSnooItems} from "../../../utils/svg/SnooHelper";
 import correct from "../../../utils/svg/corrector/Corrector";
+import SideMenu from "./components/SideMenu";
 
 const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
-    const [bodyColors, setBodyColors] = useState('#00FF00')
-    const [hairColors, setHairColors] = useState('#0000FF')
-    const [eyesColors, setEyesColors] = useState('#FFFF00')
+    const [bodyColor, setBodyColor] = useState('#00FF00')
+    const [hairColor, setHairColor] = useState('#0000FF')
+    const [eyesColor, setEyesColor] = useState('#FFFF00')
 
     const [items, setItems] = useState(new Array(10).fill("<svg></svg>"));
 
-    const [snooItems, setSnooItems] = useState(getSnooItems(items), bodyColors, hairColors, eyesColors);
+    const [snooItems, setSnooItems] = useState(getSnooItems(items), bodyColor, hairColor, eyesColor);
     const [showcase, setShowcase] = useState(null);
     const [hex, setHex] = useState("");
 
@@ -26,9 +25,9 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
             setHex(hex)
         }
 
-        getItems(items, bodyColors, hairColors, eyesColors)
-        setSnooItems(getSnooItems(items, bodyColors, hairColors, eyesColors))
-    }, [bodyColors, eyesColors, hairColors, items]);
+        getItems(items, bodyColor, hairColor, eyesColor)
+        setSnooItems(getSnooItems(items, bodyColor, hairColor, eyesColor))
+    }, [bodyColor, eyesColor, hairColor, items]);
 
     const getImageData = async (file) => {
         const objectUrl = URL.createObjectURL(file);
@@ -149,31 +148,17 @@ const Preview = ({setOpenSnackbar, setSnackbarMessage}) => {
                         snooItems={snooItems}
                         sx={{alignSelf: 'flex-end'}}
                     />
-                    <Box
-                        sx={{
-                            alignSelf: 'center'
-                        }}
-                    >
-                        <Stack
-                            direction="column"
-                            spacing={2}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
-                            <ColorSection
-                                bodyColor={bodyColors}
-                                setBodyColor={setBodyColors}
-                                hairColor={hairColors}
-                                setHairColor={setHairColors}
-                                eyesColor={eyesColors}
-                                setEyesColor={setEyesColors}
-                            />
-                            <ZipDownload snooItems={snooItems} hex={hex} showcase={showcase}/>
-                        </Stack>
-                    </Box>
+
+                    <SideMenu
+                        bodyColor={bodyColor}
+                        setBodyColor={setBodyColor}
+                        hairColor={hairColor}
+                        setHairColor={setHairColor}
+                        eyesColor={eyesColor}
+                        setEyesColor={setEyesColor}
+                        snooItems={snooItems}
+                        showcase={showcase}
+                        hex={hex}/>
                 </Stack>
             </Stack>
         </Box>
